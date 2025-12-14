@@ -1,0 +1,14 @@
+package net.armaments;
+
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.armaments.datagen.ModModelProvider;
+
+public class ArmamentsDataGenerator implements DataGeneratorEntrypoint {
+	@Override
+	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+		FabricDataGenerator.Pack pack  = fabricDataGenerator.createPack();
+		//pack.addProvider(ExampleProvider::new);
+		pack.addProvider(ModModelProvider::new);
+	}
+}

@@ -50,7 +50,7 @@ public class PistolItem extends Item implements GunItem {
     }
 
     @Override
-    public void shoot(LivingEntity entity) {
-        entity.addVelocity(0, 2d, 0);
+    public void shoot(PlayerEntity shooter, ItemStack stack) {
+        shooter.addVelocity(0, 2d, 0);
     }
 }

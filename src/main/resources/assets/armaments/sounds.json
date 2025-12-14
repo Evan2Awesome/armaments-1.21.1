@@ -1,0 +1,8 @@
+{
+  "gunshot": {
+    "subtitle": "sounds.armaments.gunshot",
+    "sounds": [
+      "armaments:gunshot"
+    ]
+  }
+}

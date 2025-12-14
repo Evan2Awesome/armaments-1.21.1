@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "armaments:item/revolver"
+    "layer0": "armaments:item/revolver_2d"
   },
   "display": {
     "firstperson_righthand": {

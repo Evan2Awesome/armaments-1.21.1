@@ -1,8 +1,12 @@
 package net.armaments.item.custom;
 
+import net.armaments.client.ModSounds;
+import net.armaments.util.Functions;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -25,12 +29,19 @@ public class PistolItem extends Item implements GunItem {
     }
 
     @Override
-    public float getDamage() {
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        super.onStoppedUsing(stack, world, user, remainingUseTicks);
+        if (user instanceof PlayerEntity player) this.shoot(player, stack);
+    }
+
+    @Override
+    public float getDamage(ItemStack stack) {
         return 5f;
     }
 
     @Override
     public void shoot(PlayerEntity shooter, ItemStack stack) {
-        shooter.addVelocity(0, this.getDamage() * 0.5f, 0);
+        shooter.playSound(ModSounds.GUNSHOT, 1f, 1f);
+        if (Functions.raycastEntity(shooter, 50d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
     }
 }

@@ -2,8 +2,8 @@
   "format_version": "1.9.0",
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "armaments:item/revolver_3d",
-    "particle": "armaments:item/revolver_3d"
+    "0": "armaments:item/revolver",
+    "particle": "armaments:item/revolver"
   },
   "gui_light": "front",
   "elements": [

@@ -1,5 +1,6 @@
 package net.armaments;
 
+import net.armaments.client.ModSounds;
 import net.armaments.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
@@ -13,6 +14,7 @@ public class Armaments implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
+		ModSounds.register();
 	}
 
 	public static Identifier id(String id) {

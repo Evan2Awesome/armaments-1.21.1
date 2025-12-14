@@ -4,6 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public interface GunItem {
-    float getDamage();
+    float getDamage(ItemStack stack);
     void shoot(PlayerEntity shooter, ItemStack gun);
 }

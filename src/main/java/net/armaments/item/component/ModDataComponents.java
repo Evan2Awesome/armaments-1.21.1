@@ -10,9 +10,6 @@ import net.minecraft.util.Identifier;
 import java.util.function.UnaryOperator;
 
 public class ModDataComponents {
-    public static final ComponentType<Boolean> USE_COMPONENT = register("use_component",
-            builder -> builder.packetCodec(PacketCodecs.BOOL).cache());
-
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Armaments.MOD_ID, name),
                 builderOperator.apply(ComponentType.builder()).build());

@@ -12,6 +12,7 @@
   },
   "client": [
     "BipedEntityModelMixin",
+    "InGameHudMixin",
     "ItemRendererMixin",
     "MinecraftClientMixin",
     "ModelLoaderMixin"

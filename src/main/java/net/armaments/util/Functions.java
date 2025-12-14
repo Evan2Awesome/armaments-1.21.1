@@ -8,10 +8,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.BowItem;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class Functions {

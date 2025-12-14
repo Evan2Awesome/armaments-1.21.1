@@ -12,7 +12,9 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
-    public static final Item REVOLVER = registerItem("revolver", new PistolItem(new Item.Settings().maxCount(1)));
+    public static final Item REVOLVER = registerItem("revolver", new PistolItem(new Item.Settings()
+            .maxCount(1)
+            .maxDamage(250)));
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(Armaments.MOD_ID,name),item);

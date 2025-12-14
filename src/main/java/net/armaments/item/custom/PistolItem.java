@@ -51,6 +51,6 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void shoot(LivingEntity entity) {
-        entity.damage(entity.getDamageSources().cactus(), this.getDamage());
+        entity.addVelocity(0, 2d, 0);
     }
 }

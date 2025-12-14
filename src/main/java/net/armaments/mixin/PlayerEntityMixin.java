@@ -18,12 +18,4 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
-
-    @Shadow @NotNull public abstract ItemStack getWeaponStack();
-
-    @WrapMethod(method = "attack")
-    private void armaments$editAttack(Entity target, Operation<Void> original) {
-        if (this.getWeaponStack().getItem() instanceof GunItem gun) gun.shoot(this);
-        else original.call(target);
-    }
 }

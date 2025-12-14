@@ -1,5 +1,5 @@
 {
-  "parent": "armaments:item/revolver_3d",
+  "parent": "armaments:item/revolver",
   "overrides": [
     {
       "predicate": {

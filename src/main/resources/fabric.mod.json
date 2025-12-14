@@ -18,6 +18,9 @@
 		"main": [
 			"net.armaments.Armaments"
 		],
+		"client": [
+			"net.armaments.ArmamentsClient"
+		],
 		"fabric-datagen": [
 			"net.armaments.ArmamentsDataGenerator"
 		]

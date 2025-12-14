@@ -6,6 +6,7 @@
 		"0": "armaments:item/revolver_spin",
 		"particle": "armaments:item/revolver_spin"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"from": [8, -1, 1],

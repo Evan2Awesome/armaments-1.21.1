@@ -1,9 +1,8 @@
 package net.armaments.mixin;
 
-import net.armaments.Armaments;
+import net.armaments.util.Functions;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,11 +14,9 @@ public abstract class ModelLoaderMixin {
     @Shadow
     protected abstract void loadItemModel(ModelIdentifier id);
 
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;loadItemModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 1))
+    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;loadItemModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 1, shift = At.Shift.AFTER))
     private void onInit(CallbackInfo ci) {
-        //this.loadItemModel(ModelIdentifier.ofInventoryVariant(ExampleMod.id("example")));
-        this.loadItemModel(ModelIdentifier.ofInventoryVariant(Armaments.id("revolver_3d")));
-        this.loadItemModel(ModelIdentifier.ofInventoryVariant(Armaments.id("revolver_spin")));
-        this.loadItemModel(ModelIdentifier.ofInventoryVariant(Armaments.id("revolver_spin_2")));
+        this.loadItemModel(Functions.mId("revolver_2d"));
+        this.loadItemModel(Functions.mId("revolver_fp"));
     }
 }

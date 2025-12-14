@@ -1,0 +1,11 @@
+{
+  "parent": "armaments:item/revolver_3d",
+  "overrides": [
+    {
+      "predicate": {
+        "armaments:spinning": 1
+      },
+      "model": "armaments:item/revolver_spin"
+    }
+  ]
+}

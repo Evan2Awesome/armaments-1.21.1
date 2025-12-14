@@ -17,6 +17,8 @@ public class MinecraftClientMixin {
     private boolean armaments$overrideAttack(Operation<Boolean> original) {
         if (this.player instanceof ClientPlayerEntity player && player.getMainHandStack().getItem() instanceof GunItem gun) {
             gun.shoot(player, player.getMainHandStack());
-        } return original.call();
+            return false;
+        }
+        return original.call();
     }
 }

@@ -87,7 +87,8 @@ public abstract class ItemRendererMixin {
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(world.getTime()*-200));
         }
         if (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof PistolItem)) {
-            matrices.translate(0, Math.cos(world.getTime()) * 0.02,0);
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(leftHanded ? 40F : -40F));
+            matrices.translate(-0.1, Math.cos(world.getTime()) * 0.02,0);
         }
     }
 }

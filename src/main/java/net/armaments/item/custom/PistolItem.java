@@ -35,19 +35,15 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
         this.reload(stack, user);
+        user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
         if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 20);
         return super.finishUsing(stack, world, user);
     }
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        if (stack.getOrDefault(ModDataComponents.SELECTED_COMPONENT, false)) {
-            return true;
-        }else {
-            return super.isItemBarVisible(stack);
-        }
+        return super.isItemBarVisible(stack) || stack.getOrDefault(ModDataComponents.SELECTED_COMPONENT, false);
     }
 
     @Override
@@ -81,9 +77,12 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 10);
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
-        if (user instanceof PlayerEntity player && remainingUseTicks <= 40) this.bigShot(player, stack);
+
+        if (user instanceof PlayerEntity player) {
+            player.getItemCooldownManager().set(stack.getItem(), 10);
+            if (remainingUseTicks <= 40) this.bigShot(player, stack);
+        }
     }
 
     @Override
@@ -104,10 +103,10 @@ public class PistolItem extends Item implements GunItem {
     @Override
     public void shoot(PlayerEntity shooter, ItemStack stack) {
         if (this.getAmmo(stack) >= 1) {
-            stack.damage(1, shooter, EquipmentSlot.MAINHAND);
+            stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -115,10 +114,10 @@ public class PistolItem extends Item implements GunItem {
 
     public void bigShot(PlayerEntity shooter, ItemStack stack) {
         if (this.getAmmo(stack) >= 1) {
-            stack.damage(1, shooter, EquipmentSlot.MAINHAND);
+            stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), 12);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), 12);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -126,11 +125,7 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (selected) {
-            stack.set(ModDataComponents.SELECTED_COMPONENT, true);
-        }else {
-            stack.set(ModDataComponents.SELECTED_COMPONENT, false);
-        }
+        stack.set(ModDataComponents.SELECTED_COMPONENT, selected || (entity instanceof LivingEntity livingEntity && stack.equals(livingEntity.getOffHandStack())));
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 }

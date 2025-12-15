@@ -1,6 +1,5 @@
 package net.armaments.mixin;
 
-import net.armaments.item.custom.PistolItem;
 import net.armaments.util.ModTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -1,6 +1,7 @@
 package net.armaments.item.custom;
 
 import net.armaments.client.ModSounds;
+import net.armaments.item.ModItems;
 import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
@@ -14,9 +15,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
-
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 
 public class PistolItem extends Item implements GunItem {
     public PistolItem(Settings settings) {
@@ -37,7 +37,7 @@ public class PistolItem extends Item implements GunItem {
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
-        stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(stack)));
+        this.reload(stack, user);
         if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 20);
         return super.finishUsing(stack, world, user);
     }
@@ -95,6 +95,11 @@ public class PistolItem extends Item implements GunItem {
     @Override
     public int getMaxAmmo(ItemStack stack) {
         return 6;
+    }
+
+    @Override
+    public Item ammoItem(ItemStack stack) {
+        return ModItems.REVOLVER_AMMO;
     }
 
     @Override

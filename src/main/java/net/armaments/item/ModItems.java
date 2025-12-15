@@ -16,6 +16,8 @@ public class ModItems {
             .maxCount(1)
             .maxDamage(250)));
 
+    public static final Item REVOLVER_AMMO = registerItem("revolver_ammo", new Item(new Item.Settings()));
+
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(Armaments.MOD_ID,name),item);
     }

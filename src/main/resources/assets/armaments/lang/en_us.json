@@ -1,4 +1,5 @@
 {
   "itemgroup.armaments.armaments_items": "Armaments",
-  "item.armaments.revolver": "Revolver"
+  "item.armaments.revolver": "Revolver",
+  "item.armaments.revolver_ammo": "Revolver Ammo"
 }

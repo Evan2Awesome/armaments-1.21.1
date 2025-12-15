@@ -1,6 +1,5 @@
 package net.armaments.item.component;
 
-import com.mojang.serialization.Codec;
 import net.armaments.Armaments;
 import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodecs;

@@ -15,7 +15,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class PistolItem extends Item implements GunItem {
@@ -109,8 +108,8 @@ public class PistolItem extends Item implements GunItem {
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
             if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
-            shooter.setPitch(shooter.getPitch() - Random.create().nextBetweenExclusive(1, 11));
-            shooter.setYaw(shooter.getYaw() - Random.create().nextBetweenExclusive(-2, 3));
+            shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
+            shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
     }
 
@@ -120,8 +119,8 @@ public class PistolItem extends Item implements GunItem {
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
             if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), 12);
-            shooter.setPitch(shooter.getPitch() - Random.create().nextBetweenExclusive(5, 16));
-            shooter.setYaw(shooter.getYaw() - Random.create().nextBetweenExclusive(-2, 3));
+            shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
+            shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
     }
 

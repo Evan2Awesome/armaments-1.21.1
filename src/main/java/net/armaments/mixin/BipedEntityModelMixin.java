@@ -1,6 +1,7 @@
 package net.armaments.mixin;
 
 import net.armaments.item.custom.PistolItem;
+import net.armaments.util.ModTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
@@ -28,7 +29,7 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
 
     @Inject(method = "setAngles*", at = @At(value = "TAIL"))
     private void setAnglesMixin(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo info) {
-        if (livingEntity.getMainHandStack().getItem() instanceof PistolItem){
+        if (livingEntity.getMainHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
             if (livingEntity.getMainArm().equals(Arm.RIGHT)) {
                 this.rightArm.yaw = -0.1F + this.head.yaw;
                 this.rightArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
@@ -36,14 +37,14 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
                 this.leftArm.yaw = 0.1F + this.head.yaw;
                 this.leftArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
             }
-            if (livingEntity.getOffHandStack().getItem() instanceof PistolItem){
-                if (livingEntity.getMainArm().equals(Arm.RIGHT)) {
-                    this.leftArm.yaw = 0.1F + this.head.yaw;
-                    this.leftArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
-                }else {
-                    this.rightArm.yaw = -0.1F + this.head.yaw;
-                    this.rightArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
-                }
+        }
+        if (livingEntity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)){
+            if (livingEntity.getMainArm().equals(Arm.RIGHT)) {
+                this.leftArm.yaw = 0.1F + this.head.yaw;
+                this.leftArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
+            }else {
+                this.rightArm.yaw = -0.1F + this.head.yaw;
+                this.rightArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
             }
         }
     }

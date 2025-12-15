@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -35,6 +36,7 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
         stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(stack)));
         if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 20);
         return super.finishUsing(stack, world, user);
@@ -73,15 +75,21 @@ public class PistolItem extends Item implements GunItem {
     }
 
     @Override
+    public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
+        user.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 0.4F, 1.2F);
+        super.usageTick(world, user, stack, remainingUseTicks);
+    }
+
+    @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 10);
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
-        if (user instanceof PlayerEntity player) this.shoot(player, stack);
+        if (user instanceof PlayerEntity player && remainingUseTicks <= 40) this.bigShot(player, stack);
     }
 
     @Override
     public float getDamage(ItemStack stack) {
-        return 5f;
+        return 6f;
     }
 
     @Override
@@ -97,6 +105,17 @@ public class PistolItem extends Item implements GunItem {
             shooter.playSound(ModSounds.GUNSHOT);
             if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
             shooter.setPitch(shooter.getPitch() - Random.create().nextBetweenExclusive(1, 11));
+            shooter.setYaw(shooter.getYaw() - Random.create().nextBetweenExclusive(-2, 3));
+        }
+    }
+
+    public void bigShot(PlayerEntity shooter, ItemStack stack) {
+        if (this.getAmmo(stack) >= 1) {
+            stack.damage(1, shooter, EquipmentSlot.MAINHAND);
+            stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
+            shooter.playSound(ModSounds.GUNSHOT);
+            if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), 12);
+            shooter.setPitch(shooter.getPitch() - Random.create().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - Random.create().nextBetweenExclusive(-2, 3));
         }
     }

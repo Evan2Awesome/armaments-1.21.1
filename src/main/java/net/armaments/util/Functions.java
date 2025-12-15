@@ -27,7 +27,7 @@ public class Functions {
     public static LivingEntity raycastEntity(PlayerEntity player, double distance) {
         Vec3d start = player.getCameraPosVec(1.0f);
         HitResult end = Functions.raycast(player, distance, 1.0f, false);
-        EntityHitResult hitResult = ProjectileUtil.getEntityCollision(player.getWorld(), player, start, end.getPos(), new Box(start, end.getPos()), entity -> entity.canHit() && !entity.equals(player));
+        EntityHitResult hitResult = ProjectileUtil.getEntityCollision(player.getWorld(), player, start, end.getPos(), new Box(start, end.getPos()), entity -> entity.canHit() && entity.isAlive() && !entity.equals(player));
         return hitResult != null && hitResult.getEntity() instanceof LivingEntity entity ? entity : null;
     }
 

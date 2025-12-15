@@ -5,6 +5,7 @@ import net.armaments.item.ModItems;
 import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
+import net.armaments.util.ModDamages;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -106,7 +107,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), this.getDamage(stack));
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -117,7 +118,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), 12);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), 12);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }

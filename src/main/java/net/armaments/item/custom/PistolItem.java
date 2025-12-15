@@ -10,8 +10,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Equipment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -81,7 +83,7 @@ public class PistolItem extends Item implements GunItem {
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
 
         if (user instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(stack.getItem(), 10);
+            //player.getItemCooldownManager().set(stack.getItem(), 10);
             if (remainingUseTicks <= 40) this.bigShot(player, stack);
         }
     }
@@ -118,7 +120,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), 12);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), 9);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -128,5 +130,13 @@ public class PistolItem extends Item implements GunItem {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         stack.set(ModDataComponents.SELECTED_COMPONENT, selected || (entity instanceof LivingEntity livingEntity && stack.equals(livingEntity.getOffHandStack())));
         super.inventoryTick(stack, world, entity, slot, selected);
+    }
+
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        if (ingredient.getItem() == Items.IRON_INGOT) {
+            return true;
+        } else return false;
     }
 }

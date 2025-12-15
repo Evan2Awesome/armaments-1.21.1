@@ -3,6 +3,7 @@
   "package": "net.armaments.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

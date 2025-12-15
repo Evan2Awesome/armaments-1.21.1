@@ -1,6 +1,7 @@
 package net.armaments.item.custom;
 
 import net.armaments.client.ModSounds;
+import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
 import net.minecraft.entity.Entity;
@@ -9,7 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -35,7 +35,7 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        stack.set(ModDataComponents.AMMO_COMPONENT, getMaxAmmo(stack));
+        stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(stack)));
         if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 20);
         return super.finishUsing(stack, world, user);
     }
@@ -61,7 +61,7 @@ public class PistolItem extends Item implements GunItem {
     @Override
     public int getItemBarStep(ItemStack stack) {
         if (stack.getOrDefault(ModDataComponents.SELECTED_COMPONENT, false)) {
-            return (int) (13 * (stack.getOrDefault(ModDataComponents.AMMO_COMPONENT, 0)/(float) getMaxAmmo(stack)));
+            return (int) (13 * this.getAmmo(stack)/(float) getMaxAmmo(stack));
         }else {
             return super.getItemBarStep(stack);
         }
@@ -91,9 +91,9 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void shoot(PlayerEntity shooter, ItemStack stack) {
-        if (stack.getOrDefault(ModDataComponents.AMMO_COMPONENT, 0) >= 1) {
-            stack.damage(1,shooter, EquipmentSlot.MAINHAND);
-            stack.set(ModDataComponents.AMMO_COMPONENT, stack.getOrDefault(ModDataComponents.AMMO_COMPONENT, 0) - 1);
+        if (this.getAmmo(stack) >= 1) {
+            stack.damage(1, shooter, EquipmentSlot.MAINHAND);
+            stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
             if (Functions.raycastEntity(shooter, 100d, 1f) instanceof LivingEntity entity) entity.damage(entity.getDamageSources().playerAttack(shooter), this.getDamage(stack));
             shooter.setPitch(shooter.getPitch() - Random.create().nextBetweenExclusive(1, 11));

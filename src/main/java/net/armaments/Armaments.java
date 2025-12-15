@@ -2,6 +2,7 @@ package net.armaments;
 
 import net.armaments.client.ModSounds;
 import net.armaments.item.ModItems;
+import net.armaments.network.ModPlayPackets;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ public class Armaments implements ModInitializer {
 	public void onInitialize() {
 		ModItems.registerModItems();
 		ModSounds.register();
+		ModPlayPackets.registerC2S();
 	}
 
 	public static Identifier id(String id) {

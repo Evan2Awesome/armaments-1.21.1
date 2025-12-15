@@ -12,9 +12,8 @@ import java.util.function.UnaryOperator;
 
 public class ModDataComponents {
     public static final ComponentType<Boolean> SELECTED_COMPONENT = register("selected_component",
-            builder -> builder.codec(Codec.BOOL));
-    public static final ComponentType<Integer> AMMO_COMPONENT = register("ammo_component",
-            integerBuilder -> integerBuilder.codec(Codec.INT));
+            builder -> builder.packetCodec(PacketCodecs.BOOL).cache());
+    public static final ComponentType<AmmoComponent> AMMO = register("ammo_component", builder -> builder.codec(AmmoComponent.CODEC).cache());
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Armaments.MOD_ID, name),

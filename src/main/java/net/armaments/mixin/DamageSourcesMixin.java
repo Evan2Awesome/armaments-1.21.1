@@ -16,7 +16,7 @@ public class DamageSourcesMixin implements ModDamages {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void armaments$addSources(DynamicRegistryManager registryManager, CallbackInfo ci) {
-        this.sources = new ModDamageSources((DamageSources) (Object) this);
+        this.sources = new ModDamageSources((DamageSources)(Object) this);
     }
 
     @Override

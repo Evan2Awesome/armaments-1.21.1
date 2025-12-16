@@ -11,7 +11,7 @@ public class ModSounds {
     public static final SoundEvent GUNSHOT = register("gunshot");
 
     public static SoundEvent register(String name) {
-        Identifier id = Armaments.id("gunshot");
+        Identifier id = Armaments.id(name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 

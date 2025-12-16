@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Equipment;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -128,15 +128,13 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        stack.set(ModDataComponents.SELECTED_COMPONENT, selected || (entity instanceof LivingEntity livingEntity && stack.equals(livingEntity.getOffHandStack())));
+        stack.set(ModDataComponents.SELECTED_COMPONENT, selected || slot == PlayerInventory.OFF_HAND_SLOT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
 
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        if (ingredient.getItem() == Items.IRON_INGOT) {
-            return true;
-        } else return false;
+        return ingredient.isOf(Items.IRON_INGOT);
     }
 }

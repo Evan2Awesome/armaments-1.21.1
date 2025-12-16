@@ -1,5 +1,6 @@
 package net.armaments.item.custom;
 
+import net.armaments.item.ModItems;
 import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
@@ -21,8 +22,8 @@ public interface GunItem {
 
     default void reload(ItemStack gun, LivingEntity entity) {
         if (entity instanceof PlayerEntity player) {
-            if (player.isInCreativeMode()) gun.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(gun)));
-            else if (Functions.getAmmo(this.ammoItem(gun), player) instanceof ItemStack ammo && !ammo.isEmpty()) {
+            if (player.isInCreativeMode() || !Functions.getAmmo(ModItems.CREATIVE_AMMO_POUCH, player).isEmpty()) gun.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(gun)));
+            else while (this.getAmmo(gun) < this.getMaxAmmo(gun) && Functions.getAmmo(this.ammoItem(gun), player) instanceof ItemStack ammo && !ammo.isEmpty()) {
                 int magSize = this.getMaxAmmo(gun) - this.getAmmo(gun);
                 int loading = Math.min(this.getMaxAmmo(gun), Math.min(magSize, ammo.getCount()));
                 ammo.decrementUnlessCreative(loading, player);

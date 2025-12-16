@@ -128,6 +128,7 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        System.out.println(slot);
         stack.set(ModDataComponents.SELECTED_COMPONENT, selected || slot == PlayerInventory.OFF_HAND_SLOT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }

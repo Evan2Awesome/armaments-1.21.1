@@ -7,10 +7,15 @@ import net.armaments.item.custom.PistolItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+
+import java.util.List;
 
 public class ModItems {
     public static final Item REVOLVER = registerItem("revolver", new PistolItem(new Item.Settings()
@@ -18,7 +23,14 @@ public class ModItems {
             .maxDamage(250)));
 
     public static final Item REVOLVER_AMMO = registerItem("revolver_ammo", new Item(new Item.Settings()));
-    public static final Item CREATIVE_AMMO_POUCH = registerItem("creative_ammo_pouch", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
+    public static final Item CREATIVE_AMMO_POUCH = registerItem("creative_ammo_pouch", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC))
+    {
+        @Override
+        public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+            tooltip.add(Text.translatable("creative_ammo_pouch_tooltip"));
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(Armaments.MOD_ID,name),item);

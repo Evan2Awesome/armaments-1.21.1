@@ -17,6 +17,7 @@ public class ModGroup {
                         //entries.add(ModItems.EXAMPLE);
                         entries.add(ModItems.REVOLVER);
                         entries.add(ModItems.REVOLVER_AMMO);
+                        entries.add(ModItems.CREATIVE_AMMO_POUCH);
                     })
                     .build());
 

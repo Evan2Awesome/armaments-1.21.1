@@ -1,6 +1,9 @@
 {
   "itemgroup.armaments.armaments_items": "Armaments",
+
   "item.armaments.revolver": "Revolver",
   "item.armaments.revolver_ammo": "Revolver Ammo",
-  "item.armaments.creative_ammo_pouch": "Creative Ammo Pouch"
+  "item.armaments.creative_ammo_pouch": "Creative Ammo Pouch",
+
+  "creative_ammo_pouch_tooltip": "Despite its small size, this pouch contains a bottomless supply of ammunition for any weapon."
 }

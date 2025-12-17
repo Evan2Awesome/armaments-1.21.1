@@ -1,6 +1,7 @@
 package net.armaments.entity;
 
 import net.armaments.Armaments;
+import net.armaments.util.ModDamages;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
@@ -14,6 +15,10 @@ public class ModDamageSources {
 
     public ModDamageSources(DamageSources sources) {
         this.sources = sources;
+    }
+
+    public static ModDamageSources of(LivingEntity entity) {
+        return ((ModDamages)entity.getDamageSources()).armaments$sources();
     }
 
     public DamageSource revolver(LivingEntity entity) {

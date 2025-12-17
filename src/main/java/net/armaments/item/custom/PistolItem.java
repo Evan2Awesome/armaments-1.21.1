@@ -1,11 +1,12 @@
 package net.armaments.item.custom;
 
 import net.armaments.client.ModSounds;
+import net.armaments.entity.ModDamageSources;
 import net.armaments.item.ModItems;
 import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
-import net.armaments.util.ModDamages;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PistolItem extends Item implements GunItem {
@@ -79,6 +81,11 @@ public class PistolItem extends Item implements GunItem {
     }
 
     @Override
+    public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
+        return false;
+    }
+
+    @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
 
@@ -89,7 +96,7 @@ public class PistolItem extends Item implements GunItem {
     }
 
     @Override
-    public float getDamage(ItemStack stack) {
+    public float getDamage(ItemStack stack, LivingEntity shooter) {
         return 6f;
     }
 
@@ -109,7 +116,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), this.getDamage(stack));
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter));
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -120,7 +127,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), this.getDamage(stack) * 1.5F);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter) * 1.5F);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -128,7 +135,6 @@ public class PistolItem extends Item implements GunItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        System.out.println(slot);
         stack.set(ModDataComponents.SELECTED_COMPONENT, selected || slot == PlayerInventory.OFF_HAND_SLOT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }

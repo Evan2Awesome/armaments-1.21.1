@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public interface GunItem {
-    float getDamage(ItemStack stack);
+    float getDamage(ItemStack stack, LivingEntity shooter);
     int getMaxAmmo(ItemStack stack);
     Item ammoItem(ItemStack stack);
 

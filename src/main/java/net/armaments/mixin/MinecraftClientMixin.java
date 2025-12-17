@@ -19,16 +19,15 @@ public abstract class MinecraftClientMixin {
 
     @WrapMethod(method = "doAttack")
     private boolean armaments$overrideAttack(Operation<Boolean> original) {
-        if (this.player instanceof ClientPlayerEntity player && player.getMainHandStack().getItem() instanceof GunItem gun) {
-            gun.shoot(player, player.getMainHandStack());
+        if (this.player != null && this.player.getMainHandStack().getItem() instanceof GunItem gun) {
+            gun.shoot(this.player, this.player.getMainHandStack());
             ClientPlayNetworking.send(new ShootC2SPacket());
             return true;
-        }
-        return original.call();
+        } else return original.call();
     }
 
-    @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;handleBlockBreaking(Z)V", ordinal = 0))
+    @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;handleBlockBreaking(Z)V"))
     private void armaments$overrideInputEvents(MinecraftClient client, boolean breaking, Operation<Void> original) {
-        original.call(client, breaking && !(this.player.getMainHandStack().getItem() instanceof GunItem));
+        original.call(client, breaking && this.player != null && !(this.player.getMainHandStack().getItem() instanceof GunItem));
     }
 }

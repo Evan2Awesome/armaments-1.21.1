@@ -120,7 +120,7 @@ public class PistolItem extends Item implements GunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(stack) - 1));
             shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), 9);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(((ModDamages)entity.getDamageSources()).armaments$sources().revolver(shooter), this.getDamage(stack) * 1.5F);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }

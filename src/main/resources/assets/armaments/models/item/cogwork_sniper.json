@@ -140,11 +140,33 @@
 		}
 	],
 	"display": {
+		"thirdperson_righthand": {
+			"translation": [
+				0,
+				4.5,
+				-4.75
+			]
+		},
+		"thirdperson_lefthand": {
+			"translation": [
+				0,
+				4.5,
+				-4.75
+			]
+		},
 		"firstperson_righthand": {
-			"translation": [-2.75, 4, 0]
+			"translation": [
+				-2.75,
+				4,
+				0
+			]
 		},
 		"firstperson_lefthand": {
-			"translation": [-3.75, 4, 0]
+			"translation": [
+				-3.75,
+				4,
+				0
+			]
 		}
 	},
 	"groups": [

@@ -1,5 +1,6 @@
 package net.armaments.mixin;
 
+import net.armaments.ArmamentsClient;
 import net.armaments.util.ModTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,22 +27,29 @@ public abstract class BipedEntityModelMixin<T extends LivingEntity> extends Anim
     @Shadow @Final public ModelPart leftArm;
     @Shadow @Final public ModelPart head;
 
-    @Inject(method = "setAngles*", at = @At(value = "TAIL"))
-    private void setAnglesMixin(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo info) {
-        if (livingEntity.getMainHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
-            if (livingEntity.getMainArm().equals(Arm.RIGHT)) {
+    @Inject(method = "setAngles*", at = @At(value = "TAIL")) @SuppressWarnings("unchecked")
+    private void setAnglesMixin(T entity, float f, float g, float h, float i, float j, CallbackInfo info) {
+        BipedEntityModel<LivingEntity> model = (BipedEntityModel<LivingEntity>)(Object) this;
+        ArmamentsClient.ANGLES_MAP.forEach((item, consumer) -> {
+            if (entity.getMainHandStack().isOf(item) || entity.getOffHandStack().isOf(item)) consumer.accept(entity, model, h - entity.age);
+        });
+
+        boolean rightArm = entity.getMainArm().equals(Arm.RIGHT);
+
+        if (entity.getMainHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
+            if (rightArm) {
                 this.rightArm.yaw = -0.1F + this.head.yaw;
                 this.rightArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
-            }else {
+            } else {
                 this.leftArm.yaw = 0.1F + this.head.yaw;
                 this.leftArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
             }
         }
-        if (livingEntity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)){
-            if (livingEntity.getMainArm().equals(Arm.RIGHT)) {
+        if (entity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)){
+            if (rightArm) {
                 this.leftArm.yaw = 0.1F + this.head.yaw;
                 this.leftArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
-            }else {
+            } else {
                 this.rightArm.yaw = -0.1F + this.head.yaw;
                 this.rightArm.pitch = (float) (-Math.PI / 2) + this.head.pitch;
             }

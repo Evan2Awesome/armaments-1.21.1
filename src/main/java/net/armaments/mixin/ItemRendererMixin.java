@@ -8,7 +8,6 @@ import net.armaments.item.ModItems;
 import net.armaments.util.Functions;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -20,7 +19,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,14 +28,14 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ItemRendererMixin {
     @Shadow public abstract ItemModels getModels();
 
-    @Shadow @Final private MinecraftClient client;
-
     @WrapMethod(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V")
     private void armaments$gun(ItemStack stack, ModelTransformationMode mode, boolean left, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model, Operation<Void> original) {
 
-        if (stack.isOf(ModItems.REVOLVER)){
-            if (mode.equals(ModelTransformationMode.GUI) || mode.equals(ModelTransformationMode.GROUND) || mode.equals(ModelTransformationMode.FIXED))
-                model = this.getModels().getModelManager().getModel(Functions.mId("revolver_2d"));
+        boolean two_dimensional = mode.equals(ModelTransformationMode.GUI) || mode.equals(ModelTransformationMode.GROUND) || mode.equals(ModelTransformationMode.FIXED);
+
+        if (two_dimensional) {
+            if (stack.isOf(ModItems.REVOLVER)) model = this.getModels().getModelManager().getModel(Functions.mId("revolver_2d"));
+            if (stack.isOf(ModItems.SNIPER_RIFLE)) model = this.getModels().getModelManager().getModel(Functions.mId("cogwork_sniper_2d"));
         }
 
         original.call(stack, mode, left, matrices, vertexConsumers, light, overlay, model);

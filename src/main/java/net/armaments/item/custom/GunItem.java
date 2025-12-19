@@ -1,7 +1,6 @@
 package net.armaments.item.custom;
 
 import net.armaments.item.ModItems;
-import net.armaments.item.component.AmmoComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.util.Functions;
 import net.minecraft.entity.LivingEntity;
@@ -17,18 +16,18 @@ public interface GunItem {
     void shoot(PlayerEntity shooter, ItemStack gun);
 
     default int getAmmo(ItemStack stack) {
-        return Math.min(this.getMaxAmmo(stack), stack.getOrDefault(ModDataComponents.AMMO, AmmoComponent.DEFAULT).ammo());
+        return Math.min(this.getMaxAmmo(stack), stack.getOrDefault(ModDataComponents.AMMO, 0));
     }
 
     default void reload(ItemStack gun, LivingEntity entity) {
         if (entity instanceof PlayerEntity player) {
-            if (player.isInCreativeMode() || !Functions.getAmmo(ModItems.CREATIVE_AMMO_POUCH, player).isEmpty()) gun.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(gun)));
+            if (player.isInCreativeMode() || !Functions.getAmmo(ModItems.CREATIVE_AMMO_POUCH, player).isEmpty()) gun.set(ModDataComponents.AMMO, this.getMaxAmmo(gun));
             else while (this.getAmmo(gun) < this.getMaxAmmo(gun) && Functions.getAmmo(this.ammoItem(gun), player) instanceof ItemStack ammo && !ammo.isEmpty()) {
                 int magSize = this.getMaxAmmo(gun) - this.getAmmo(gun);
                 int loading = Math.min(this.getMaxAmmo(gun), Math.min(magSize, ammo.getCount()));
                 ammo.decrementUnlessCreative(loading, player);
-                gun.set(ModDataComponents.AMMO, new AmmoComponent(this.getAmmo(gun) + loading));
+                gun.set(ModDataComponents.AMMO, this.getAmmo(gun) + loading);
             }
-        } else gun.set(ModDataComponents.AMMO, new AmmoComponent(this.getMaxAmmo(gun)));
+        } else gun.set(ModDataComponents.AMMO, this.getMaxAmmo(gun));
     }
 }

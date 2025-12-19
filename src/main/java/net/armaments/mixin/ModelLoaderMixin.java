@@ -18,5 +18,7 @@ public abstract class ModelLoaderMixin {
     private void onInit(CallbackInfo ci) {
         this.loadItemModel(Functions.mId("revolver_2d"));
         this.loadItemModel(Functions.mId("revolver_fp"));
+
+        this.loadItemModel(Functions.mId("cogwork_sniper_2d"));
     }
 }

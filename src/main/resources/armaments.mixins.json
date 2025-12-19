@@ -5,6 +5,7 @@
   "mixins": [
     "DamageSourcesMixin",
     "ItemStackMixin",
+    "PlayerEntityMixin",
     "PlayerInventoryMixin"
   ],
   "injectors": {

@@ -17,6 +17,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
     @ModifyReturnValue(method = "isUsingSpyglass", at = @At("RETURN"))
     private boolean armaments$sniperScope(boolean original) {
-        return original || (this.isUsingItem() && this.getActiveItem().isOf(ModItems.SNIPER_RIFLE) && this.isSneaky());
+        return original || (this.isUsingItem() && this.getActiveItem().isOf(ModItems.SNIPER_RIFLE) && !this.isSneaky());
     }
 }

@@ -17,7 +17,7 @@ public class SniperItem extends AbstractGunItem implements GunItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return user.isSneaky() ? 72000 : 50;
+        return user.isSneaky() ? 50 : 72000;
     }
 
     @Override

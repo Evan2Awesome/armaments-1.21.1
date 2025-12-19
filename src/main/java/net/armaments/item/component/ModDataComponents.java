@@ -12,7 +12,7 @@ import java.util.function.UnaryOperator;
 
 public class ModDataComponents {
     public static final ComponentType<Boolean> SELECTED_COMPONENT = register("selected_component",
-            builder -> builder.packetCodec(PacketCodecs.BOOL).cache());
+            builder -> builder.packetCodec(PacketCodecs.BOOL));
     public static final ComponentType<Integer> AMMO = register("ammo_component", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.INTEGER).cache());
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

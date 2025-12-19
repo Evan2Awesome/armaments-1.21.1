@@ -39,12 +39,12 @@ public class ModAngles {
                     CrossbowPosing.hold(rightArm, leftArm, model.head, rightArmed);
 
                     if (entity.isUsingItem() && entity.getActiveItem().isOf(ModItems.SNIPER_RIFLE)) {
-                        primary.roll  = 0.2F * multiplier;
-                        primary.pitch += 0.2F;
-                        primary.yaw   += 0.1F * multiplier;
+                        primary.roll  = 0.4F * multiplier;
+                        primary.pitch += 0.1F;
+                        primary.yaw   += 0.15F * multiplier;
                     } else {
                         primary.roll  = 0.0F;
-                        primary.pitch += 0.3F;
+                        primary.pitch += 0.2F;
                         primary.yaw   += 0.2F * multiplier;
                     }
                 }

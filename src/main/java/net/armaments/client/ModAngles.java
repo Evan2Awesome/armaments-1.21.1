@@ -2,6 +2,7 @@ package net.armaments.client;
 
 import net.armaments.ArmamentsClient;
 import net.armaments.item.ModItems;
+import net.armaments.util.ModTags;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CrossbowPosing;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -47,6 +48,29 @@ public class ModAngles {
                         primary.pitch += 0.2F;
                         primary.yaw   += 0.2F * multiplier;
                     }
+                }
+            }
+        });
+
+        ArmamentsClient.addAngles(ModTags.Items.ONE_HANDED_GUN, (entity, model, tickDelta) -> {
+            boolean rightArm = entity.getMainArm().equals(Arm.RIGHT);
+
+            if (entity.getMainHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
+                if (rightArm) {
+                    model.rightArm.yaw = -0.1F + model.head.yaw;
+                    model.rightArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
+                } else {
+                    model.leftArm.yaw = 0.1F + model.head.yaw;
+                    model.leftArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
+                }
+            }
+            if (entity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)){
+                if (rightArm) {
+                    model.leftArm.yaw = 0.1F + model.head.yaw;
+                    model.leftArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
+                } else {
+                    model.rightArm.yaw = -0.1F + model.head.yaw;
+                    model.rightArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
                 }
             }
         });

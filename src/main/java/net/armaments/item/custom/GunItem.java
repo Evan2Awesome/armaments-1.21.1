@@ -13,6 +13,7 @@ public interface GunItem {
     int getMaxAmmo(ItemStack stack);
     Item ammoItem(ItemStack stack);
 
+    default void tryShoot(PlayerEntity shooter, ItemStack gun) { if (!shooter.isSpectator()) this.shoot(shooter, gun); }
     void shoot(PlayerEntity shooter, ItemStack gun);
 
     default int getAmmo(ItemStack stack) {

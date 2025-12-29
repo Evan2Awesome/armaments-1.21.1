@@ -13,7 +13,7 @@ public class ModPlayPackets {
 
         ServerPlayNetworking.registerGlobalReceiver(ShootC2SPacket.ID, (packet, context) -> {
             ItemStack stack = context.player().getStackInHand(packet.mainhand() ? Hand.MAIN_HAND : Hand.OFF_HAND);
-            if (stack.getItem() instanceof GunItem gun) gun.shoot(context.player(), stack);
+            if (stack.getItem() instanceof GunItem gun) gun.tryShoot(context.player(), stack);
         });
     }
 }

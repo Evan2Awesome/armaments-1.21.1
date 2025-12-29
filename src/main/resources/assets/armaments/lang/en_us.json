@@ -2,9 +2,13 @@
   "itemgroup.armaments.armaments_items": "Armaments",
 
   "item.armaments.revolver": "Revolver",
-  "item.armaments.revolver_ammo": "Revolver Ammo",
+  "item.armaments.bullet": "Bullet",
   "item.armaments.creative_ammo_pouch": "Creative Ammo Pouch",
   "item.armaments.cogwork_sniper": "Cogwork Sniper",
+  "item.armaments.echo_gun": "Echo Gun",
 
-  "creative_ammo_pouch_tooltip": "Despite its small size, this pouch contains a bottomless supply of ammunition for any weapon."
+  "creative_ammo_pouch_tooltip": "Despite its small size, this pouch contains a bottomless supply of ammunition for any weapon.",
+
+  "sounds.armaments.gunshot": "Gunshot",
+  "sounds.armaments.echo_gunshot": "Echo Gunshot"
 }

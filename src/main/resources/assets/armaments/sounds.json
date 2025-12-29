@@ -4,5 +4,11 @@
     "sounds": [
       "armaments:gunshot"
     ]
+  },
+  "echo_gunshot": {
+    "subtitle": "sounds.armaments.echo_gunshot",
+    "sounds": [
+      "armaments:echo_gunshot"
+    ]
   }
 }

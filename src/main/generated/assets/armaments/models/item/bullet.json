@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "armaments:item/revolver_ammo"
+    "layer0": "armaments:item/bullet"
   }
 }

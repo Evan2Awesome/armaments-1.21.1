@@ -30,4 +30,6 @@ public interface GunItem {
             }
         } else gun.set(ModDataComponents.AMMO, this.getMaxAmmo(gun));
     }
+
+
 }

@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.armaments.item.ModItems;
+import net.armaments.item.custom.EchoGunItem;
+import net.armaments.item.custom.SniperItem;
 import net.armaments.util.Functions;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,6 +24,8 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ItemRenderer.class)
@@ -36,6 +40,7 @@ public abstract class ItemRendererMixin {
         if (two_dimensional) {
             if (stack.isOf(ModItems.REVOLVER)) model = this.getModels().getModelManager().getModel(Functions.mId("revolver_2d"));
             if (stack.isOf(ModItems.SNIPER_RIFLE)) model = this.getModels().getModelManager().getModel(Functions.mId("cogwork_sniper_2d"));
+            if (stack.isOf(ModItems.ECHO_GUN)) model = this.getModels().getModelManager().getModel(Functions.mId("echo_gun_2d"));
         }
 
         original.call(stack, mode, left, matrices, vertexConsumers, light, overlay, model);
@@ -57,5 +62,17 @@ public abstract class ItemRendererMixin {
         }
 
         return original.call(renderer, stack, world, entity, seed);
+    }
+
+    @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/ItemRenderer;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V"))
+    private void renderItemMixin(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int seed, CallbackInfo ci) {
+        if (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof SniperItem)) {
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30F));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(leftHanded ? -30F : 30F));
+        }
+        if (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof EchoGunItem)) {
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30F));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(leftHanded ? -30F : 30F));
+        }
     }
 }

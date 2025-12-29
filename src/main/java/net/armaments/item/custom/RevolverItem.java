@@ -57,7 +57,7 @@ public class RevolverItem extends AbstractGunItem {
 
     @Override
     public Item ammoItem(ItemStack stack) {
-        return ModItems.REVOLVER_AMMO;
+        return ModItems.BULLET;
     }
 
     @Override

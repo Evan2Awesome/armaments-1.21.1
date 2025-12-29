@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
-public class SniperItem extends AbstractGunItem implements GunItem {
-    public SniperItem(Settings settings) {
+public class EchoGunItem extends AbstractGunItem{
+    public EchoGunItem(Settings settings) {
         super(settings);
     }
 
@@ -26,17 +26,17 @@ public class SniperItem extends AbstractGunItem implements GunItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return user.isSneaky() ? 50 : 72000;
+        return 60;
     }
 
     @Override
     public float getDamage(ItemStack stack, LivingEntity shooter) {
-        return 15;
+        return 4F;
     }
 
     @Override
     public int getMaxAmmo(ItemStack stack) {
-        return 4;
+        return 8;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class SniperItem extends AbstractGunItem implements GunItem {
         if (this.getAmmo(gun) >= 1) {
             gun.damage(1, shooter, gun.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             gun.set(ModDataComponents.AMMO, this.getAmmo(gun) - 1);
-            shooter.playSound(ModSounds.GUNSHOT);
-            if (Functions.raycastEntity(shooter, 200d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(gun, shooter));
+            shooter.playSound(ModSounds.ECHO_GUNSHOT);
+            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(gun, shooter));
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }

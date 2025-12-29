@@ -18,7 +18,7 @@ public class ModGroup {
                         //entries.add(ModItems.EXAMPLE);
                         ItemStack revolver = ModItems.REVOLVER.getDefaultStack(); revolver.set(ModDataComponents.AMMO, ModItems.REVOLVER.getMaxAmmo(revolver)); revolver.set(ModDataComponents.SELECTED_COMPONENT, true);
                         entries.add(revolver);
-                        entries.add(ModItems.REVOLVER_AMMO);
+                        entries.add(ModItems.BULLET);
                         ItemStack sniper = ModItems.SNIPER_RIFLE.getDefaultStack(); sniper.set(ModDataComponents.AMMO, ModItems.SNIPER_RIFLE.getMaxAmmo(sniper)); sniper.set(ModDataComponents.SELECTED_COMPONENT, true);
                         entries.add(sniper);
                         entries.add(ModItems.CREATIVE_AMMO_POUCH);

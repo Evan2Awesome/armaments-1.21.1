@@ -19,7 +19,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
          //watch kaupenjoe videos 7, 10, and 11 to understand tags
         getOrCreateTagBuilder(ModTags.Items.ONE_HANDED_GUN)
-                .add(ModItems.REVOLVER);
+                .add(ModItems.REVOLVER)
+                .add(ModItems.ECHO_GUN);
 
     }
 }

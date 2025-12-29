@@ -3,6 +3,7 @@ package net.armaments.item;
 import net.armaments.Armaments;
 import net.armaments.ModGroup;
 import net.armaments.item.component.ModDataComponents;
+import net.armaments.item.custom.EchoGunItem;
 import net.armaments.item.custom.RevolverItem;
 import net.armaments.item.custom.SniperItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -20,9 +21,10 @@ import java.util.List;
 
 public class ModItems {
     public static final RevolverItem REVOLVER = registerItem("revolver", new RevolverItem(new Item.Settings().maxDamage(250)));
-    public static final SniperItem SNIPER_RIFLE = registerItem("cogwork_sniper", new SniperItem(new Item.Settings()));
+    public static final SniperItem SNIPER_RIFLE = registerItem("cogwork_sniper", new SniperItem(new Item.Settings().maxDamage(160)));
+    public static final EchoGunItem ECHO_GUN = registerItem("echo_gun", new EchoGunItem(new Item.Settings().maxDamage(320)));
 
-    public static final Item REVOLVER_AMMO = registerItem("revolver_ammo", new Item(new Item.Settings()));
+    public static final Item BULLET = registerItem("bullet", new Item(new Item.Settings()));
     public static final Item CREATIVE_AMMO_POUCH = registerItem("creative_ammo_pouch", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC))
     {
         @Override

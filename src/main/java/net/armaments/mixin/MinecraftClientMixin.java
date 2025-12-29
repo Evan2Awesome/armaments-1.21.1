@@ -25,7 +25,7 @@ public abstract class MinecraftClientMixin {
 
     @WrapMethod(method = "doAttack")
     private boolean armaments$overrideAttack(Operation<Boolean> original) {
-        if (this.player != null && this.player.getMainHandStack().getItem() instanceof GunItem gun) {
+        if (this.player != null && this.player.getMainHandStack().getItem() instanceof GunItem gun && !player.isSpectator()) {
             gun.shoot(this.player, this.player.getMainHandStack());
             ClientPlayNetworking.send(new ShootC2SPacket(true));
             return true;
@@ -40,7 +40,7 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
     private boolean armaments$customShooting(ClientPlayerEntity player, Operation<Boolean> original) {
         ItemStack stack = player.getActiveItem();
-        if (stack.isOf(ModItems.SNIPER_RIFLE) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed()) {
+        if (stack.isOf(ModItems.SNIPER_RIFLE) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator()) {
             gun.shoot(player, stack);
             ClientPlayNetworking.send(new ShootC2SPacket(player.getMainHandStack().equals(stack)));
         }

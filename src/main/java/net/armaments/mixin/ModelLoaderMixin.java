@@ -20,5 +20,7 @@ public abstract class ModelLoaderMixin {
         this.loadItemModel(Functions.mId("revolver_fp"));
 
         this.loadItemModel(Functions.mId("cogwork_sniper_2d"));
+
+        this.loadItemModel(Functions.mId("echo_gun_2d"));
     }
 }

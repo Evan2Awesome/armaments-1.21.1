@@ -40,7 +40,7 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
     private boolean armaments$customShooting(ClientPlayerEntity player, Operation<Boolean> original) {
         ItemStack stack = player.getActiveItem();
-        if (stack.isOf(ModItems.SNIPER_RIFLE) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator()) {
+        if ((stack.isOf(ModItems.SNIPER_RIFLE) || stack.isOf(ModItems.ECHO_GUN)) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator() && !player.isSneaky()) {
             gun.tryShoot(player, stack);
             ClientPlayNetworking.send(new ShootC2SPacket(player.getMainHandStack().equals(stack)));
         }

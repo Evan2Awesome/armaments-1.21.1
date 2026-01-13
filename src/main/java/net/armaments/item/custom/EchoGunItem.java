@@ -26,7 +26,7 @@ public class EchoGunItem extends AbstractGunItem{
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 60;
+        return user.isSneaky() ? 60 : 72000;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class EchoGunItem extends AbstractGunItem{
             gun.set(ModDataComponents.AMMO, this.getAmmo(gun) - 1);
             shooter.playSound(ModSounds.ECHO_GUNSHOT);
             if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(gun, shooter));
-            shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
-            shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
+            shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 6));
+            shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-1, 2));
         }
     }
 }

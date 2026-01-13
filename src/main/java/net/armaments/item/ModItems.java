@@ -43,7 +43,7 @@ public class ModItems {
         ModDataComponents.register();
         ModGroup.registerItemGroups();
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SEARCH).register(fabricItemGroupEntries -> {
-            fabricItemGroupEntries.add(REVOLVER);
+            fabricItemGroupEntries.add(BULLET);
         });
     }
 }

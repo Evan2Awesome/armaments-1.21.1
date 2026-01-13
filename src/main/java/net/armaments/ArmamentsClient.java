@@ -3,10 +3,14 @@ package net.armaments;
 import net.armaments.client.ModAngles;
 import net.armaments.client.ModModelPredicates;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.text.Text;
 import org.apache.commons.lang3.function.TriConsumer;
 
 import java.util.HashMap;
@@ -28,5 +32,23 @@ public class ArmamentsClient implements ClientModInitializer {
 
     public static void addAngles(TagKey<Item> tag, TriConsumer<LivingEntity, BipedEntityModel<LivingEntity>, Float> consumer) {
         TAG_ANGLES_MAP.put(tag, consumer);
+    }
+
+    public static void renderRelativeToCrosshair(DrawContext drawContext, int ammo, int maxAmmo, int x, int y, int color) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        TextRenderer textRenderer = client.textRenderer;
+
+        if (client.player == null) return;
+
+        Text text = Text.literal(ammo + "/" + maxAmmo);
+
+        drawContext.drawText(
+                textRenderer,
+                text,
+                x,
+                y,
+                color,
+                true // shadow
+        );
     }
 }

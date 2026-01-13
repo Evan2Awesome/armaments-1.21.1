@@ -11,6 +11,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class SniperItem extends AbstractGunItem implements GunItem {
@@ -19,9 +22,24 @@ public class SniperItem extends AbstractGunItem implements GunItem {
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!player.isSneaky())
+            player.playSound(SoundEvents.ITEM_SPYGLASS_USE, 1.0F, 1.0F);
+        player.incrementStat(Stats.USED.getOrCreateStat(this));
+        return super.use(world, player, hand);
+    }
+
+    @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
         return super.finishUsing(stack, world, user);
+    }
+
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        if (!user.isSneaky())
+            user.playSound(SoundEvents.ITEM_SPYGLASS_STOP_USING, 1.0F, 1.0F);
+        super.onStoppedUsing(stack, world, user, remainingUseTicks);
     }
 
     @Override

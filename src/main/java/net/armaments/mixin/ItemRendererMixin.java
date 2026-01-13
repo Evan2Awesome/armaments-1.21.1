@@ -51,7 +51,7 @@ public abstract class ItemRendererMixin {
         if (stack.isOf(ModItems.REVOLVER) && entity.isUsingItem() && stack.equals(entity.getActiveItem())) {
             if (mode.isFirstPerson()) {
                 matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(left ? 40F : -40F));
-                matrices.translate(-0.1, Math.cos(world.getTime()) * 0.025,0);
+                matrices.translate(-0.1,Math.cos(world.getTime()) * 0.025,0);
 
                 BakedModel model = this.getModels().getModelManager().getModel(Functions.mId("revolver_fp"));
                 ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld)world : null;
@@ -71,8 +71,12 @@ public abstract class ItemRendererMixin {
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(leftHanded ? -30F : 30F));
         }
         if (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof EchoGunItem)) {
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30F));
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(leftHanded ? -30F : 30F));
+            if (!entity.isSneaky()) {
+                matrices.translate(leftHanded ? 0.5F : -0.5F,0.1,0);
+            }else{
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30F));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(leftHanded ? -30F : 30F));
+            }
         }
     }
 }

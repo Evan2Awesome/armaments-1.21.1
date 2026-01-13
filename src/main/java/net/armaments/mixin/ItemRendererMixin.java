@@ -48,7 +48,7 @@ public abstract class ItemRendererMixin {
 
     @WrapOperation(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/ItemRenderer;getModel(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)Lnet/minecraft/client/render/model/BakedModel;"))
     private BakedModel armaments$gun(ItemRenderer renderer, ItemStack stack, World world, LivingEntity entity, int seed, Operation<BakedModel> original, @Local(argsOnly = true) ModelTransformationMode mode, @Local(argsOnly = true) boolean left, @Local(argsOnly = true) MatrixStack matrices) {
-        if (stack.isOf(ModItems.REVOLVER) && entity.isUsingItem() && stack.equals(entity.getActiveItem())) {
+        if (stack.isOf(ModItems.REVOLVER) && entity != null && entity.isUsingItem() && stack.equals(entity.getActiveItem())) {
             if (mode.isFirstPerson()) {
                 matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(left ? 40F : -40F));
                 matrices.translate(-0.1,Math.cos(world.getTime()) * 0.025,0);

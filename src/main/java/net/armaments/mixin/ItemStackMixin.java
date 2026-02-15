@@ -29,6 +29,7 @@ public abstract class ItemStackMixin implements ComponentHolder, FabricItemStack
         if (this.getItem() instanceof GunItem gun) {
             ItemStack stack = (ItemStack)(Object)this;
             tooltip.accept(Text.literal("Ammo: " + gun.getAmmo(stack) + "/" + gun.getMaxAmmo((stack))));
+            tooltip.accept(Text.literal("Damage: " + gun.getDamage(stack,player)));
         }
     }
 }

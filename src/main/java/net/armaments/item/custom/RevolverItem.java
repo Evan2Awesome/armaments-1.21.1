@@ -12,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class RevolverItem extends AbstractGunItem {
@@ -21,12 +23,14 @@ public class RevolverItem extends AbstractGunItem {
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 50;
+        return 30;
     }
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
+        this.reload(stack, user);
+        if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 10);
         return super.finishUsing(stack, world, user);
     }
 
@@ -39,9 +43,8 @@ public class RevolverItem extends AbstractGunItem {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
-
         if (user instanceof PlayerEntity player) {
-            if (remainingUseTicks <= 40) this.bigShot(player, stack);
+            if (remainingUseTicks <= 20) this.bigShot(player, stack);
         }
     }
 
@@ -53,6 +56,16 @@ public class RevolverItem extends AbstractGunItem {
     @Override
     public int getMaxAmmo(ItemStack stack) {
         return 6;
+    }
+
+    @Override
+    public int getReloadTime(ItemStack stack) {
+        return 50;
+    }
+
+    @Override
+    public float getKickback(ItemStack stack) {
+        return 1;
     }
 
     @Override

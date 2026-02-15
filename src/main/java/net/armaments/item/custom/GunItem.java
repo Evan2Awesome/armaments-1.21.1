@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 public interface GunItem {
     float getDamage(ItemStack stack, LivingEntity shooter);
     int getMaxAmmo(ItemStack stack);
+    int getReloadTime(ItemStack stack);
+    float getKickback(ItemStack stack);
     Item ammoItem(ItemStack stack);
 
     default void tryShoot(PlayerEntity shooter, ItemStack gun) { if (!shooter.isSpectator()) this.shoot(shooter, gun); }

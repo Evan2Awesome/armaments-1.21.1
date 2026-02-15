@@ -2,6 +2,7 @@ package net.armaments;
 
 import net.armaments.datagen.ModItemTagProvider;
 import net.armaments.datagen.ModModelProvider;
+import net.armaments.datagen.ModRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -12,5 +13,6 @@ public class ArmamentsDataGenerator implements DataGeneratorEntrypoint {
 		//pack.addProvider(ExampleProvider::new);
 		pack.addProvider(ModModelProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
+		pack.addProvider(ModRecipeProvider::new);
 	}
 }

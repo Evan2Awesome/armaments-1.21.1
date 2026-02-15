@@ -34,7 +34,7 @@ public abstract class GameRendererMixin {
         boolean zooming = false;
 
         if (entity instanceof PlayerEntity player) {
-            zooming = player.isUsingItem() && player.getActiveItem().getItem() instanceof EchoGunItem && !player.isSneaky();
+            zooming = player.isUsingItem() && player.getActiveItem().getItem() instanceof EchoGunItem;
         }
 
         double target = zooming ? ZOOM_IN_TARGET : ZOOM_OUT_TARGET;

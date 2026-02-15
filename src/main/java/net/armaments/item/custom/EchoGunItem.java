@@ -10,7 +10,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class EchoGunItem extends AbstractGunItem{
@@ -20,13 +23,12 @@ public class EchoGunItem extends AbstractGunItem{
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        user.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
         return super.finishUsing(stack, world, user);
     }
 
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return user.isSneaky() ? 60 : 72000;
+        return 72000;
     }
 
     @Override
@@ -37,6 +39,16 @@ public class EchoGunItem extends AbstractGunItem{
     @Override
     public int getMaxAmmo(ItemStack stack) {
         return 8;
+    }
+
+    @Override
+    public int getReloadTime(ItemStack stack) {
+        return 60;
+    }
+
+    @Override
+    public float getKickback(ItemStack stack) {
+        return 0.25f;
     }
 
     @Override
@@ -54,5 +66,10 @@ public class EchoGunItem extends AbstractGunItem{
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 6));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-1, 2));
         }
+    }
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return ingredient.isOf(Items.IRON_INGOT);
     }
 }

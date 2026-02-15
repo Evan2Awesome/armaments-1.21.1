@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
@@ -25,7 +26,6 @@ public class SniperItem extends AbstractGunItem implements GunItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!player.isSneaky())
             player.playSound(SoundEvents.ITEM_SPYGLASS_USE, 1.0F, 1.0F);
-        player.incrementStat(Stats.USED.getOrCreateStat(this));
         return super.use(world, player, hand);
     }
 
@@ -58,6 +58,16 @@ public class SniperItem extends AbstractGunItem implements GunItem {
     }
 
     @Override
+    public int getReloadTime(ItemStack stack) {
+        return 160;
+    }
+
+    @Override
+    public float getKickback(ItemStack stack) {
+        return 1;
+    }
+
+    @Override
     public Item ammoItem(ItemStack stack) {
         return ModItems.BULLET;
     }
@@ -72,5 +82,10 @@ public class SniperItem extends AbstractGunItem implements GunItem {
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
+    }
+
+    @Override
+    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+        return ingredient.isOf(Items.GOLD_INGOT);
     }
 }

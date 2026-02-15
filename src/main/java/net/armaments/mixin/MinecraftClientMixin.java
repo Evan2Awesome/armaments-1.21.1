@@ -25,9 +25,12 @@ public abstract class MinecraftClientMixin {
 
     @WrapMethod(method = "doAttack")
     private boolean armaments$overrideAttack(Operation<Boolean> original) {
-        if (this.player != null && this.player.getMainHandStack().getItem() instanceof GunItem gun && !player.isSpectator()) {
-            gun.tryShoot(this.player, this.player.getMainHandStack());
-            ClientPlayNetworking.send(new ShootC2SPacket(true));
+        if (this.player != null && this.player.getMainHandStack().getItem() instanceof GunItem gun && !player.isSpectator() && gun.getAmmo(this.player.getMainHandStack()) > 0) {
+            if (player.getAttackCooldownProgress(1F) == 1 && !player.getItemCooldownManager().isCoolingDown(this.player.getMainHandStack().getItem())) {
+                gun.tryShoot(this.player, this.player.getMainHandStack());
+                player.resetLastAttackedTicks();
+                ClientPlayNetworking.send(new ShootC2SPacket(true));
+            }
             return true;
         } else return original.call();
     }
@@ -40,9 +43,12 @@ public abstract class MinecraftClientMixin {
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
     private boolean armaments$customShooting(ClientPlayerEntity player, Operation<Boolean> original) {
         ItemStack stack = player.getActiveItem();
-        if ((stack.isOf(ModItems.SNIPER_RIFLE) || stack.isOf(ModItems.ECHO_GUN)) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator() && !player.isSneaky()) {
-            gun.tryShoot(player, stack);
-            ClientPlayNetworking.send(new ShootC2SPacket(player.getMainHandStack().equals(stack)));
+        if ((stack.isOf(ModItems.SNIPER_RIFLE) || stack.isOf(ModItems.ECHO_GUN)) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator() && gun.getAmmo(stack) > 0) {
+            if (player.getAttackCooldownProgress(1F) == 1 && !player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
+                gun.tryShoot(player, stack);
+                player.resetLastAttackedTicks();
+                ClientPlayNetworking.send(new ShootC2SPacket(player.getMainHandStack().equals(stack)));
+            }
         }
         return original.call(player);
     }

@@ -8,6 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -22,6 +24,13 @@ public abstract class AbstractGunItem extends Item implements GunItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         player.setCurrentHand(hand);
+        if (player.isSneaky() && this.getAmmo(player.getActiveItem()) < this.getMaxAmmo(player.getActiveItem())) {
+            player.playSound(SoundEvents.BLOCK_COPPER_TRAPDOOR_CLOSE, 1F, 1.2F);
+            reload(player.getActiveItem(), player);
+            player.getItemCooldownManager().set(player.getActiveItem().getItem(), getReloadTime(player.getActiveItem()));
+            player.stopUsingItem();
+        }
+        player.incrementStat(Stats.USED.getOrCreateStat(this));
         return super.use(world, player, hand);
     }
 
@@ -32,8 +41,6 @@ public abstract class AbstractGunItem extends Item implements GunItem {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        this.reload(stack, user);
-        if (user instanceof PlayerEntity player) player.getItemCooldownManager().set(stack.getItem(), 20);
         return super.finishUsing(stack, world, user);
     }
 

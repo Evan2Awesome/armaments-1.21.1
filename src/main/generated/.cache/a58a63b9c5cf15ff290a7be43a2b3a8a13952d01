@@ -1,0 +1,9 @@
+// 1.21.1	2026-02-11T15:53:07.9627093	Armaments/Recipes
+39fd6befd9688c1dc713d0a2858608b5147faa0a data\armaments\recipe\revolver.json
+927a16b6d9671ea4b6bb78f2d6c1d5c6f31a8671 data\armaments\advancement\recipes\misc\bullet.json
+673f6f1af1e37142a555de4372888b449c1256bb data\armaments\recipe\bullet.json
+65b12067cecab1f1d07e7be345be79cc4ba2b7e7 data\armaments\recipe\cogwork_sniper.json
+4a74c4f1971c127f9e7f8b70eb3d738f720f2c82 data\armaments\advancement\recipes\misc\cogwork_sniper.json
+126d82ab715f69305d440b7563654730a523a4f1 data\armaments\advancement\recipes\misc\revolver.json
+ce05aa8f71d9eaa7d1f0ac6c12da9191d6591359 data\armaments\advancement\recipes\misc\echo_gun.json
+6281903a24d274423968b008e2d2ddf0fc3ad522 data\armaments\recipe\echo_gun.json

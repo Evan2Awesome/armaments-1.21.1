@@ -1,7 +1,6 @@
 package net.armaments.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.armaments.item.custom.EchoGunItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,9 +8,7 @@ import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Environment(EnvType.CLIENT)

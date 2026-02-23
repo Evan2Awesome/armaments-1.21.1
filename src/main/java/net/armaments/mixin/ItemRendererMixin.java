@@ -8,7 +8,6 @@ import net.armaments.item.ModItems;
 import net.armaments.item.custom.EchoGunItem;
 import net.armaments.item.custom.GunItem;
 import net.armaments.item.custom.RevolverItem;
-import net.armaments.item.custom.SniperItem;
 import net.armaments.util.Functions;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

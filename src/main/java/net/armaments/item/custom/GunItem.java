@@ -33,4 +33,8 @@ public interface GunItem {
             }
         } else gun.set(ModDataComponents.AMMO, this.getMaxAmmo(gun));
     }
+
+    default boolean fullyAutomatic(ItemStack gun, LivingEntity entity) {
+        return false;
+    }
 }

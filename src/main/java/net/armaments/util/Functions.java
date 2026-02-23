@@ -1,6 +1,7 @@
 package net.armaments.util;
 
 import net.armaments.Armaments;
+import net.armaments.item.custom.GunItem;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -46,5 +47,9 @@ public class Functions {
         Vec3d vec3d3 = vec3d.add(vec3d2.x * maxDistance, vec3d2.y * maxDistance, vec3d2.z * maxDistance);
         return entity.getWorld().raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER,
                 includeFluids ? RaycastContext.FluidHandling.ANY : RaycastContext.FluidHandling.NONE, entity));
+    }
+
+    public static boolean gunUsable(PlayerEntity player, GunItem gun, ItemStack stack) {
+        return player.getAttackCooldownProgress(1f) == 1f && gun.getAmmo(stack) > 0 && !player.getItemCooldownManager().isCoolingDown(stack.getItem());
     }
 }

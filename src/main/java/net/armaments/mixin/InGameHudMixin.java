@@ -7,25 +7,13 @@ import net.armaments.ArmamentsClient;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.item.custom.GunItem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.*;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.texture.TextureManager;
-import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-
-import java.util.function.Function;
 
 @Mixin (InGameHud.class)
 public class InGameHudMixin {

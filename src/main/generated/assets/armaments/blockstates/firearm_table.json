@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "armaments:block/firearm_table"
+    }
+  }
+}

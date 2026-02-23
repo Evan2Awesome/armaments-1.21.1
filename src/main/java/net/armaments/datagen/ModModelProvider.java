@@ -1,5 +1,6 @@
 package net.armaments.datagen;
 
+import net.armaments.block.ModBlocks;
 import net.armaments.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -15,6 +16,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         //blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.EXAMPLE_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FIREARM_TABLE);
     }
 
     @Override

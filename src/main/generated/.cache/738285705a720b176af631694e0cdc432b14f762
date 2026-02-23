@@ -1,3 +1,6 @@
-// 1.21.1	2026-02-11T15:53:07.9607085	Armaments/Model Definitions
+// 1.21.1	2026-02-22T20:25:18.5002683	Armaments/Model Definitions
+ea470d0327223cff680dc2d3f4d74c33cefb6d3a assets\armaments\models\item\firearm_table.json
+1e1ad25bacd6ff89943fea2d328132ca39b80c9a assets\armaments\blockstates\firearm_table.json
+37ce06f1cccae4f3435cc53831b8621409c130fa assets\armaments\models\block\firearm_table.json
 73bfec112411f62bd6c21f9932812f7614ca850c assets\armaments\models\item\creative_ammo_pouch.json
 77af458257d5450709cca9bf4ca8fccde8ecc096 assets\armaments\models\item\bullet.json

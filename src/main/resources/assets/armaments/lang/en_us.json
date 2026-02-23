@@ -1,11 +1,13 @@
 {
   "itemgroup.armaments.armaments_items": "Armaments",
 
-  "item.armaments.revolver": "Revolver",
   "item.armaments.bullet": "Bullet",
   "item.armaments.creative_ammo_pouch": "Creative Ammo Pouch",
   "item.armaments.cogwork_sniper": "Cogwork Sniper",
   "item.armaments.echo_gun": "Echo Gun",
+  "item.armaments.revolver": "Revolver",
+
+  "block.armaments.firearm_table": "Firearm Table",
 
   "creative_ammo_pouch_tooltip": "Despite its small size, this pouch contains a bottomless supply of ammunition for any weapon.",
 

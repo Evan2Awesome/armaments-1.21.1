@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "armaments:block/firearm_table_bottom",
+    "east": "armaments:block/firearm_table_side",
+    "north": "armaments:block/firearm_table_front",
+    "particle": "armaments:block/firearm_table_top",
+    "south": "armaments:block/firearm_table_front",
+    "up": "armaments:block/firearm_table_top",
+    "west": "armaments:block/firearm_table_side"
+  }
+}

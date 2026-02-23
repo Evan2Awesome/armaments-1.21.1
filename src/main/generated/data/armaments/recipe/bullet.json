@@ -8,17 +8,17 @@
     "g": {
       "item": "minecraft:gunpowder"
     },
-    "n": {
-      "item": "minecraft:iron_nugget"
+    "i": {
+      "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
-    " n ",
+    " i ",
     " c ",
     " g "
   ],
   "result": {
-    "count": 4,
+    "count": 8,
     "id": "armaments:bullet"
   }
 }

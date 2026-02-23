@@ -21,15 +21,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter recipeExporter) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BULLET,4)
-                .pattern(" n ")
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BULLET,8)
+                .pattern(" i ")
                 .pattern(" c ")
                 .pattern(" g ")
                 .input('c', Items.COPPER_INGOT)
-                .input('n', Items.IRON_NUGGET)
+                .input('i', Items.IRON_INGOT)
                 .input('g', Items.GUNPOWDER)
                 .criterion(hasItem(Items.COPPER_INGOT), conditionsFromItem(Items.COPPER_INGOT))
-                .criterion(hasItem(Items.IRON_NUGGET), conditionsFromItem(Items.IRON_NUGGET))
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
                 .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
                 .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "bullet"));
 

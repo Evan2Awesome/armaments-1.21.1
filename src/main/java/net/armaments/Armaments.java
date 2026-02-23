@@ -1,5 +1,6 @@
 package net.armaments;
 
+import net.armaments.block.ModBlocks;
 import net.armaments.client.ModSounds;
 import net.armaments.item.ModItems;
 import net.armaments.network.ModPlayPackets;
@@ -17,6 +18,7 @@ public class Armaments implements ModInitializer {
 		ModItems.registerModItems();
 		ModSounds.register();
 		ModPlayPackets.registerC2S();
+		ModBlocks.registerModBlocks();
 	}
 
 	public static Identifier id(String id) {

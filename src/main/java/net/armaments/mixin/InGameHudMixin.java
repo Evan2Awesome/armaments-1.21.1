@@ -30,7 +30,13 @@ public class InGameHudMixin {
     private void armaments$renderCrosshair(DrawContext instance, Identifier texture, int x, int y, int width, int height, Operation<Void> original) {
         if (MinecraftClient.getInstance().player instanceof PlayerEntity player && player.getMainHandStack().getItem() instanceof GunItem gunItem) {
             original.call(instance, GUN_CROSSHAIR_TEXTURE, x, y, width, height);
-            ArmamentsClient.renderRelativeToCrosshair(instance, player.getMainHandStack().getOrDefault(ModDataComponents.AMMO,0), gunItem.getMaxAmmo(player.getMainHandStack()), x - 1, y + 26, 0xFFFFFF);
+            int offsetX = -1;
+            if (gunItem.getAmmo(player.getMainHandStack()) >= 100) {
+                offsetX = -13;
+            } else if (gunItem.getAmmo(player.getMainHandStack()) >= 10) {
+                offsetX = -7;
+            }
+            ArmamentsClient.renderRelativeToCrosshair(instance, player.getMainHandStack().getOrDefault(ModDataComponents.AMMO,0), gunItem.getMaxAmmo(player.getMainHandStack()), x + offsetX, y + 26, 0xFFFFFF);
         } else original.call(instance, texture, x, y, width, height);
     }
 

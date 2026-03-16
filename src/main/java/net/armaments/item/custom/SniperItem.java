@@ -68,7 +68,7 @@ public class SniperItem extends AbstractGunItem implements GunItem {
 
     @Override
     public Item ammoItem(ItemStack stack) {
-        return ModItems.BULLET;
+        return ModItems.HEAVY_BULLET;
     }
 
     @Override

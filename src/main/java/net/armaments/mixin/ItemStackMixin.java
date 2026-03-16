@@ -3,6 +3,7 @@ package net.armaments.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.armaments.item.custom.GunItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemStack;
+import net.minecraft.client.resource.language.TranslationStorage;
 import net.minecraft.component.ComponentHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,8 +29,9 @@ public abstract class ItemStackMixin implements ComponentHolder, FabricItemStack
     private void armaments$appendComponents(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local Consumer<Text> tooltip) {
         if (this.getItem() instanceof GunItem gun) {
             ItemStack stack = (ItemStack)(Object)this;
-            tooltip.accept(Text.literal("Ammo: " + gun.getAmmo(stack) + "/" + gun.getMaxAmmo((stack))));
+            tooltip.accept(Text.literal("Requires: " + TranslationStorage.getInstance().get(gun.ammoItem(stack).getTranslationKey())));
             tooltip.accept(Text.literal("Damage: " + gun.getDamage(stack,player)));
+            tooltip.accept(Text.literal("Ammo: " + gun.getAmmo(stack) + "/" + gun.getMaxAmmo((stack))));
         }
     }
 }

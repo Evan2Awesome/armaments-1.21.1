@@ -3,6 +3,7 @@ package net.armaments.item.component;
 import com.mojang.serialization.Codec;
 import net.armaments.Armaments;
 import net.minecraft.component.ComponentType;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -14,6 +15,9 @@ public class ModDataComponents {
     public static final ComponentType<Boolean> SELECTED_COMPONENT = register("selected_component",
             builder -> builder.packetCodec(PacketCodecs.BOOL));
     public static final ComponentType<Integer> AMMO = register("ammo_component", builder -> builder.codec(Codec.INT).packetCodec(PacketCodecs.INTEGER).cache());
+    public static final ComponentType<AmmoPouchContentsComponent> AMMO_POUCH_CONTENTS = register(
+            "ammo_pouch_contents", builder -> builder.codec(AmmoPouchContentsComponent.CODEC).packetCodec(AmmoPouchContentsComponent.PACKET_CODEC).cache()
+    );
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Armaments.MOD_ID, name),

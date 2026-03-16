@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": {
+      "item": "minecraft:gunpowder"
+    },
+    "p": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "gg",
+    "pp"
+  ],
+  "result": {
+    "count": 1,
+    "id": "armaments:firearm_table"
+  }
+}

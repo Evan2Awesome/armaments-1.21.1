@@ -2,6 +2,7 @@ package net.armaments.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.armaments.item.custom.EchoGunItem;
+import net.armaments.item.custom.GunItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.Camera;
@@ -30,8 +31,8 @@ public abstract class GameRendererMixin {
 
         boolean zooming = false;
 
-        if (entity instanceof PlayerEntity player) {
-            zooming = player.isUsingItem() && player.getActiveItem().getItem() instanceof EchoGunItem;
+        if (entity instanceof PlayerEntity player && player.getActiveItem().getItem() instanceof GunItem gunItem) {
+            zooming = player.isUsingItem() && gunItem.canADS(player.getActiveItem(), player);
         }
 
         double target = zooming ? ZOOM_IN_TARGET : ZOOM_OUT_TARGET;

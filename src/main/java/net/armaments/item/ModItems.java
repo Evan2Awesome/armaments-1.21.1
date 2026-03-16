@@ -2,15 +2,17 @@ package net.armaments.item;
 
 import net.armaments.Armaments;
 import net.armaments.ModGroup;
+import net.armaments.item.component.AmmoPouchContentsComponent;
 import net.armaments.item.component.ModDataComponents;
-import net.armaments.item.custom.EchoGunItem;
-import net.armaments.item.custom.RevolverItem;
-import net.armaments.item.custom.SniperItem;
+import net.armaments.item.custom.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -48,8 +50,27 @@ public class ModItems {
                     new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
                             Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,2F, EntityAttributeModifier.Operation.ADD_VALUE
                     ), AttributeModifierSlot.MAINHAND)),true))));
+    public static final ChargeGunItem CHARGE_GUN = registerItem("charge_gun", new ChargeGunItem(new Item.Settings().maxDamage(981)
+            .attributeModifiers(new AttributeModifiersComponent(List.of(
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_SPEED_MODIFIER_ID,2.4F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND),
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,2F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND)),true))));
+    public static final FlintlockItem FLINTLOCK = registerItem("flintlock", new FlintlockItem(new Item.Settings().maxDamage(80)
+            .attributeModifiers(new AttributeModifiersComponent(List.of(
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_SPEED_MODIFIER_ID,-3F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND),
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,4F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND)),true))));
+
 
     public static final Item BULLET = registerItem("bullet", new Item(new Item.Settings()));
+    public static final Item LIGHT_BULLET = registerItem("light_bullet", new Item(new Item.Settings()));
+    public static final Item HEAVY_BULLET = registerItem("heavy_bullet", new Item(new Item.Settings()));
     public static final Item CREATIVE_AMMO_POUCH = registerItem("creative_ammo_pouch", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC))
     {
         @Override
@@ -58,6 +79,9 @@ public class ModItems {
             super.appendTooltip(stack, context, tooltip, type);
         }
     });
+    public static final AmmoPouchItem AMMO_POUCH = registerItem("ammo_pouch", new AmmoPouchItem(new Item.Settings().maxCount(1).component(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT)));
+
+    public static final Item SCREEN_SHAKE_TEST = registerItem("screen_shake_test", new ScreenShakeTestItem(new Item.Settings()));
 
     private static <T extends Item> T registerItem(String name, T item){
         return Registry.register(Registries.ITEM, Identifier.of(Armaments.MOD_ID,name),item);

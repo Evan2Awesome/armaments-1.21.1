@@ -30,12 +30,13 @@ public abstract class MinecraftClientMixin {
         if (this.player != null && !player.isSpectator()) {
             ItemStack stack = this.player.getMainHandStack();
             if (stack.getItem() instanceof GunItem gun) {
+                int remaining_ammo = gun.getAmmo(stack);
                 if (Functions.gunUsable(player, gun, stack)) {
                     gun.tryShoot(this.player, stack);
                     player.resetLastAttackedTicks();
                     ClientPlayNetworking.send(new ShootC2SPacket(true));
                 }
-                return gun.getAmmo(stack) > 0 || original.call();
+                return remaining_ammo > 0 || original.call();
             }
         } return original.call();
     }
@@ -46,9 +47,15 @@ public abstract class MinecraftClientMixin {
     }
 
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
-    private boolean armaments$customShooting(ClientPlayerEntity player, Operation<Boolean> original) {
+    private boolean armaments$ADSShooting(ClientPlayerEntity player, Operation<Boolean> original) {
         ItemStack stack = player.getActiveItem();
-        if ((stack.isOf(ModItems.SNIPER_RIFLE) || stack.isOf(ModItems.ECHO_GUN)) && stack.getItem() instanceof GunItem gun && this.options.attackKey.wasPressed() && !player.isSpectator() && gun.getAmmo(stack) > 0) {
+        if (stack.getItem() instanceof GunItem gun && (stack.isOf(ModItems.SNIPER_RIFLE) || gun.canADS(stack, player)) &&  this.options.attackKey.wasPressed() && Functions.gunUsable(player, gun, stack) && !gun.fullyAutomatic(stack, player)) {
+            if (player.getAttackCooldownProgress(1F) == 1 && !player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
+                gun.tryShoot(player, stack);
+                player.resetLastAttackedTicks();
+                ClientPlayNetworking.send(new ShootC2SPacket(player.getMainHandStack().equals(stack)));
+            }
+        }else if (!stack.isEmpty() && stack.getItem() instanceof GunItem gun && Functions.gunUsable(player, gun, stack) && gun.fullyAutomatic(stack, player) && this.options.attackKey.isPressed()) {
             if (player.getAttackCooldownProgress(1F) == 1 && !player.getItemCooldownManager().isCoolingDown(player.getMainHandStack().getItem())) {
                 gun.tryShoot(player, stack);
                 player.resetLastAttackedTicks();

@@ -16,14 +16,17 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         //blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.EXAMPLE_BLOCK);
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FIREARM_TABLE);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         //itemModelGenerator.register(ModItems.EXAMPLE, Models.GENERATED);
 //        itemModelGenerator.register(ModItems.REVOLVER, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.SCREEN_SHAKE_TEST, Models.GENERATED);
         itemModelGenerator.register(ModItems.BULLET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.LIGHT_BULLET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.HEAVY_BULLET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CREATIVE_AMMO_POUCH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.AMMO_POUCH, Models.GENERATED);
     }
 }

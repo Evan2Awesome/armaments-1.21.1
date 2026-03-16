@@ -1,2 +1,4 @@
-// 1.21.1	2026-02-22T20:25:18.4988763	Armaments/Tags for minecraft:item
-783dd0a8071e7b58d5c2ca48472824dd24ce98bb data\armaments\tags\item\one_handed_gun.json
+// 1.21.1	2026-03-16T15:37:22.2940381	Armaments/Tags for minecraft:item
+4ea2c317c32f664fe7c4e6f6a1ed4ab4b58cdc9a data\armaments\tags\item\ammo_item.json
+8884cb3ce70bc42a65ac97acc42b227724ae9169 data\armaments\tags\item\one_handed_gun.json
+dbe1f71d9f78e0b3e8ab5fdcc9994fc9d4db1117 data\armaments\tags\item\two_handed_gun.json

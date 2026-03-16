@@ -1,0 +1,28 @@
+{
+  "criteria": {
+    "got_revolver": {
+      "conditions": {
+        "items": [
+          {
+            "items": "armaments:revolver"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Obtain a revolver",
+    "icon": {
+      "count": 1,
+      "id": "armaments:revolver"
+    },
+    "title": "It's... Gun Hat, right?"
+  },
+  "requirements": [
+    [
+      "got_revolver"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

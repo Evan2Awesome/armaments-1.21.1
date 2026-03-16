@@ -50,7 +50,7 @@ public class EchoGunItem extends AbstractGunItem{
 
     @Override
     public Item ammoItem(ItemStack stack) {
-        return ModItems.BULLET;
+        return ModItems.LIGHT_BULLET;
     }
 
     @Override
@@ -68,5 +68,10 @@ public class EchoGunItem extends AbstractGunItem{
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         return ingredient.isOf(Items.IRON_INGOT);
+    }
+
+    @Override
+    public boolean canADS(ItemStack gun, LivingEntity entity) {
+        return true;
     }
 }

@@ -37,4 +37,8 @@ public interface GunItem {
     default boolean fullyAutomatic(ItemStack gun, LivingEntity entity) {
         return false;
     }
+
+    default boolean canADS(ItemStack gun, LivingEntity entity) {
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 {
   "values": [
     "armaments:revolver",
-    "armaments:echo_gun"
+    "armaments:echo_gun",
+    "armaments:flintlock"
   ]
 }

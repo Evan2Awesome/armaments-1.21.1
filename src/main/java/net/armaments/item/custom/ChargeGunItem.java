@@ -1,0 +1,66 @@
+package net.armaments.item.custom;
+
+import net.armaments.client.ModSounds;
+import net.armaments.entity.ModDamageSources;
+import net.armaments.item.ModItems;
+import net.armaments.item.component.ModDataComponents;
+import net.armaments.util.Functions;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+public class ChargeGunItem extends AbstractGunItem{
+    public ChargeGunItem(Settings settings) {
+        super(settings);
+    }
+
+    @Override
+    public float getDamage(ItemStack stack, LivingEntity shooter) {
+        return 2;
+    }
+
+    @Override
+    public int getMaxAmmo(ItemStack stack) {
+        return 20;
+    }
+
+    @Override
+    public int getReloadTime(ItemStack stack) {
+        return 100;
+    }
+
+    @Override
+    public float getKickback(ItemStack stack) {
+        return 0.15f;
+    }
+
+    @Override
+    public Item ammoItem(ItemStack stack) {
+        return ModItems.LIGHT_BULLET;
+    }
+
+    @Override
+    public void shoot(PlayerEntity shooter, ItemStack stack) {
+        float damage = getDamage(stack, shooter) + ((((float) getMaxAmmo(stack) / getAmmo(stack)) / (2/3f)) / 10);
+        if (this.getAmmo(stack) >= 1) {
+            stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+            stack.set(ModDataComponents.AMMO, this.getAmmo(stack) - 1);
+            shooter.playSound(ModSounds.GUNSHOT);
+            if (Functions.raycastEntity(shooter, 50d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), damage);
+            shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(2, 4));
+            shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-3, 4));
+        }
+    }
+
+    @Override
+    public boolean fullyAutomatic(ItemStack gun, LivingEntity entity) {
+        return true;
+    }
+
+    @Override
+    public boolean canADS(ItemStack gun, LivingEntity entity) {
+        return true;
+    }
+}

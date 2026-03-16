@@ -11,12 +11,12 @@ import net.minecraft.util.math.MathHelper;
 
 public class ModAngles {
     public static void register() {
-        ArmamentsClient.addAngles(ModItems.SNIPER_RIFLE, (entity, model, tickDelta) -> {
+        ArmamentsClient.addAngles(ModTags.Items.TWO_HANDED_GUN, (entity, model, tickDelta) -> {
             ModelPart rightArm = model.rightArm;
             ModelPart leftArm = model.leftArm;
 
-            boolean mainHand = entity.getMainHandStack().isOf(ModItems.SNIPER_RIFLE);
-            boolean offHand  = entity.getOffHandStack().isOf(ModItems.SNIPER_RIFLE);
+            boolean mainHand = entity.getMainHandStack().isIn(ModTags.Items.TWO_HANDED_GUN);
+            boolean offHand  = entity.getOffHandStack().isIn(ModTags.Items.TWO_HANDED_GUN);
 
             if (mainHand || offHand) {
                 boolean rightArmed = mainHand == entity.getMainArm().equals(Arm.RIGHT);
@@ -25,7 +25,7 @@ public class ModAngles {
                 ModelPart primary = rightArmed ? rightArm : leftArm;
                 ModelPart secondary = rightArmed ? leftArm : rightArm;
 
-                if (entity.isUsingItem() && entity.getActiveItem().isOf(ModItems.SNIPER_RIFLE) && entity.isSneaky()) {
+                if (entity.isUsingItem() && entity.getActiveItem().isIn(ModTags.Items.TWO_HANDED_GUN) && entity.isSneaky()) {
                     primary.yaw = -0.8F * multiplier;
                     primary.pitch = -0.97079635F;
                     secondary.pitch = primary.pitch;
@@ -39,7 +39,7 @@ public class ModAngles {
                 } else {
                     CrossbowPosing.hold(rightArm, leftArm, model.head, rightArmed);
 
-                    if (entity.isUsingItem() && entity.getActiveItem().isOf(ModItems.SNIPER_RIFLE)) {
+                    if (entity.isUsingItem() && entity.getActiveItem().isIn(ModTags.Items.TWO_HANDED_GUN)) {
                         primary.roll  = 0.4F * multiplier;
                         primary.pitch += 0.1F;
                         primary.yaw   += 0.15F * multiplier;

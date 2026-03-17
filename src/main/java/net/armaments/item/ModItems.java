@@ -65,9 +65,9 @@ public class ModItems {
                     ), AttributeModifierSlot.MAINHAND)),true))));
 
 
-    public static final Item BULLET = registerItem("bullet", new Item(new Item.Settings()));
+    public static final Item BULLET = registerItem("bullet", new Item(new Item.Settings().maxCount(32)));
     public static final Item LIGHT_BULLET = registerItem("light_bullet", new Item(new Item.Settings()));
-    public static final Item HEAVY_BULLET = registerItem("heavy_bullet", new Item(new Item.Settings()));
+    public static final Item HEAVY_BULLET = registerItem("heavy_bullet", new Item(new Item.Settings().maxCount(16)));
     public static final Item CREATIVE_AMMO_POUCH = registerItem("creative_ammo_pouch", new Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC))
     {
         @Override

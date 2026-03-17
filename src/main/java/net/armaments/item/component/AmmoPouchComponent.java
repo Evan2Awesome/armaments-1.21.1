@@ -72,6 +72,7 @@ public record AmmoPouchComponent(List<ItemStack> stacks, Fraction occupancy) imp
                     int decrementAmount = Math.min(stack.getCount(), max - retrieved);
                     retrieved += decrementAmount;
                     stack.decrement(decrementAmount);
+                    this.occupancy = this.occupancy.subtract(this.holder.getPerOccupancy(stack).multiplyBy(Fraction.getFraction(decrementAmount, 1)));
                     if (stack.isEmpty()) iterator.remove();
                     if (retrieved == max) return retrieved;
                 }

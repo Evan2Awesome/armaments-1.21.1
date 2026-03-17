@@ -87,7 +87,7 @@ public interface StackHolder<T extends StackHolder<T>> {
     }
 
     default Fraction getPerOccupancy(ItemStack stack) {
-        return Fraction.getFraction(1, stack.getMaxCount() * this.stackCount());
+        return getPerOccupancy(stack, this.stackCount());
     }
 
     static Fraction getPerOccupancy(ItemStack stack, int stackCount) {

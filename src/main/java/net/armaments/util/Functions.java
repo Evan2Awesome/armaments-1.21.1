@@ -41,6 +41,15 @@ public class Functions {
         return stacks.isEmpty() ? ItemStack.EMPTY : stacks.getFirst();
     }
 
+    public static List<ItemStack> getOfItem(Item item, PlayerEntity player) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (int i = 0; i < player.getInventory().size(); i++) {
+            ItemStack stack = player.getInventory().getStack(i);
+            if (stack.isOf(item)) stacks.add(stack);
+        }
+        return stacks;
+    }
+
     public static HitResult raycast(Entity entity, double maxDistance, float tickDelta, boolean includeFluids) {
         Vec3d vec3d = entity.getCameraPosVec(tickDelta);
         Vec3d vec3d2 = entity.getRotationVec(tickDelta);

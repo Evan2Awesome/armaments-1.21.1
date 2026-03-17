@@ -17,6 +17,11 @@ public interface StackHolder<T extends StackHolder<T>> {
     Fraction occupancy();
     T build(List<ItemStack> stacks, Fraction occupancy);
 
+    @SuppressWarnings("unchecked")
+    default T getThis() {
+        return (T) this;
+    }
+
     default boolean canInsert(ItemStack stack) {
         return stack.getItem().canBeNested();
     }
@@ -96,14 +101,14 @@ public interface StackHolder<T extends StackHolder<T>> {
         } else return false;
     }
 
-    static <T extends StackHolder<T>> Builder<T> builder(T holder) {
-        return new Builder<>(holder);
+    default Builder<T> builder() {
+        return new Builder<>(this.getThis());
     }
 
     class Builder<T extends StackHolder<T>> {
-        private final T holder;
-        private final List<ItemStack> stacks;
-        private Fraction occupancy;
+        public final T holder;
+        public final List<ItemStack> stacks;
+        public Fraction occupancy;
 
         public Builder(T holder) {
             this.holder = holder;

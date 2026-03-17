@@ -3,7 +3,6 @@ package net.armaments.item.custom;
 import net.armaments.item.component.AmmoPouchComponent;
 import net.armaments.item.component.AmmoPouchTooltipComponent;
 import net.armaments.item.component.ModDataComponents;
-import net.armaments.item.component.StackHolder;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
@@ -49,7 +48,7 @@ public class AmmoPouchItem extends BundleItem {
         } else {
             if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
                 ItemStack clickedStack = slot.getStack();
-                StackHolder.Builder<AmmoPouchComponent> builder = StackHolder.builder(component);
+                AmmoPouchComponent.Builder builder = component.builder();
                 if (clickedStack.isEmpty()) {
                     this.playRemoveOneSound(player);
                     ItemStack retrievedStack = builder.removeFirst();
@@ -70,7 +69,7 @@ public class AmmoPouchItem extends BundleItem {
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (clickType == ClickType.RIGHT && slot.canTakePartial(player)) {
             if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
-                StackHolder.Builder<AmmoPouchComponent> builder = StackHolder.builder(component);
+                AmmoPouchComponent.Builder builder = component.builder();
                 if (otherStack.isEmpty()) {
                     ItemStack retrievedStack = builder.removeFirst();
                     if (!retrievedStack.isEmpty()) {

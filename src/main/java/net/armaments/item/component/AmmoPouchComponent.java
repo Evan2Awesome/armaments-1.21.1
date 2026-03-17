@@ -2,6 +2,7 @@ package net.armaments.item.component;
 
 import com.mojang.serialization.Codec;
 import net.armaments.util.ModTags;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.network.RegistryByteBuf;
@@ -10,6 +11,7 @@ import net.minecraft.network.codec.PacketCodecs;
 import org.apache.commons.lang3.math.Fraction;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
 
 public record AmmoPouchComponent(List<ItemStack> stacks, Fraction occupancy) implements StackHolder<AmmoPouchComponent>, TooltipData {
@@ -24,6 +26,11 @@ public record AmmoPouchComponent(List<ItemStack> stacks, Fraction occupancy) imp
     @Override
     public int getStackCount() {
         return 4;
+    }
+
+    @Override
+    public Builder builder() {
+        return new Builder(this);
     }
 
     @Override
@@ -49,5 +56,27 @@ public record AmmoPouchComponent(List<ItemStack> stacks, Fraction occupancy) imp
     @Override @NotNull
     public String toString() {
         return this.stringify();
+    }
+
+    public static class Builder extends StackHolder.Builder<AmmoPouchComponent> {
+        public Builder(AmmoPouchComponent holder) {
+            super(holder);
+        }
+
+        public int removeOfItem(Item item, int max) {
+            int retrieved = 0;
+            Iterator<ItemStack> iterator = this.stacks.iterator();
+            while (iterator.hasNext()) {
+                ItemStack stack = iterator.next();
+                if (stack.isOf(item)) {
+                    int decrementAmount = Math.min(stack.getCount(), max - retrieved);
+                    retrieved += decrementAmount;
+                    stack.decrement(decrementAmount);
+                    if (stack.isEmpty()) iterator.remove();
+                    if (retrieved == max) return retrieved;
+                }
+            }
+            return retrieved;
+        }
     }
 }

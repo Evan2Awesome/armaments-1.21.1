@@ -1,7 +1,6 @@
 package net.armaments.client;
 
 import net.armaments.ArmamentsClient;
-import net.armaments.item.ModItems;
 import net.armaments.util.ModTags;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.CrossbowPosing;

@@ -1,13 +1,11 @@
 package net.armaments.datagen;
 
-import net.armaments.block.ModBlocks;
 import net.armaments.item.ModItems;
 import net.armaments.util.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
 
 import java.util.concurrent.CompletableFuture;
 

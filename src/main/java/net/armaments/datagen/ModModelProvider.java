@@ -1,6 +1,5 @@
 package net.armaments.datagen;
 
-import net.armaments.block.ModBlocks;
 import net.armaments.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;

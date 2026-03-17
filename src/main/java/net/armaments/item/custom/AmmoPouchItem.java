@@ -1,10 +1,11 @@
 package net.armaments.item.custom;
 
-import net.armaments.item.component.AmmoPouchContentsComponent;
-import net.armaments.item.component.AmmoPouchTooltipData;
+import net.armaments.item.component.AmmoPouchComponent;
+import net.armaments.item.component.AmmoPouchTooltipComponent;
 import net.armaments.item.component.ModDataComponents;
+import net.armaments.item.component.StackHolder;
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,11 +14,9 @@ import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.item.tooltip.BundleTooltipData;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -33,15 +32,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class AmmoPouchItem extends BundleItem {
-    private static final int ITEM_BAR_COLOR = MathHelper.packRgb(0.4F, 0.4F, 1.0F);
+    public static final int ITEM_BAR_COLOR = MathHelper.packRgb(0.4F, 0.4F, 1.0F);
 
     public AmmoPouchItem(Settings settings) {
         super(settings);
     }
 
     public static float getAmountFilled(ItemStack stack) {
-        AmmoPouchContentsComponent bundleContentsComponent = stack.getOrDefault(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT);
-        return bundleContentsComponent.getOccupancy().floatValue();
+        return stack.getOrDefault(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT).occupancy().floatValue();
     }
 
     @Override
@@ -49,56 +47,42 @@ public class AmmoPouchItem extends BundleItem {
         if (clickType != ClickType.RIGHT) {
             return false;
         } else {
-            AmmoPouchContentsComponent bundleContentsComponent = stack.get(ModDataComponents.AMMO_POUCH_CONTENTS);
-            if (bundleContentsComponent == null) {
-                return false;
-            } else {
-                ItemStack itemStack = slot.getStack();
-                AmmoPouchContentsComponent.Builder builder = new AmmoPouchContentsComponent.Builder(bundleContentsComponent);
-                if (itemStack.isEmpty()) {
+            if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
+                ItemStack clickedStack = slot.getStack();
+                StackHolder.Builder<AmmoPouchComponent> builder = StackHolder.builder(component);
+                if (clickedStack.isEmpty()) {
                     this.playRemoveOneSound(player);
-                    ItemStack itemStack2 = builder.removeFirst();
-                    if (itemStack2 != null) {
-                        ItemStack itemStack3 = slot.insertStack(itemStack2);
-                        builder.add(itemStack3);
+                    ItemStack retrievedStack = builder.removeFirst();
+                    if (!retrievedStack.isEmpty()) {
+                        ItemStack insertedStack = slot.insertStack(retrievedStack);
+                        builder.add(insertedStack);
                     }
-                } else if (itemStack.getItem().canBeNested()) {
-                    int i = builder.add(slot, player);
-                    if (i > 0) {
-                        this.playInsertSound(player);
-                    }
+                } else if (component.canInsert(clickedStack)) {
+                    if (builder.add(slot, player) > 0) this.playInsertSound(player);
                 }
-
-                stack.set(ModDataComponents.AMMO_POUCH_CONTENTS, builder.build());
+                stack.set(ModDataComponents.AMMO_POUCH, builder.build());
                 return true;
-            }
+            } else return false;
         }
     }
 
     @Override
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
         if (clickType == ClickType.RIGHT && slot.canTakePartial(player)) {
-            AmmoPouchContentsComponent bundleContentsComponent = stack.get(ModDataComponents.AMMO_POUCH_CONTENTS);
-            if (bundleContentsComponent == null) {
-                return false;
-            } else {
-                AmmoPouchContentsComponent.Builder builder = new AmmoPouchContentsComponent.Builder(bundleContentsComponent);
+            if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
+                StackHolder.Builder<AmmoPouchComponent> builder = StackHolder.builder(component);
                 if (otherStack.isEmpty()) {
-                    ItemStack itemStack = builder.removeFirst();
-                    if (itemStack != null) {
+                    ItemStack retrievedStack = builder.removeFirst();
+                    if (!retrievedStack.isEmpty()) {
                         this.playRemoveOneSound(player);
-                        cursorStackReference.set(itemStack);
+                        cursorStackReference.set(retrievedStack);
                     }
-                } else {
-                    int i = builder.add(otherStack);
-                    if (i > 0) {
-                        this.playInsertSound(player);
-                    }
+                } else if (component.canInsert(otherStack)) {
+                    if (builder.add(otherStack) > 0) this.playInsertSound(player);
                 }
-
-                stack.set(ModDataComponents.AMMO_POUCH_CONTENTS, builder.build());
+                stack.set(ModDataComponents.AMMO_POUCH, builder.build());
                 return true;
-            }
+            } else return false;
         } else {
             return false;
         }
@@ -106,26 +90,27 @@ public class AmmoPouchItem extends BundleItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        if (dropAllBundledItems(itemStack, user)) {
+        ItemStack stack = user.getStackInHand(hand);
+        if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component && component.dropAllItems(user)) {
+            stack.set(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT);
             this.playDropContentsSound(user);
             user.incrementStat(Stats.USED.getOrCreateStat(this));
-            return TypedActionResult.success(itemStack, world.isClient());
+            return TypedActionResult.success(stack, world.isClient());
         } else {
-            return TypedActionResult.fail(itemStack);
+            return TypedActionResult.fail(stack);
         }
     }
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        AmmoPouchContentsComponent bundleContentsComponent = stack.getOrDefault(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT);
-        return bundleContentsComponent.getOccupancy().compareTo(Fraction.ZERO) > 0;
+        AmmoPouchComponent component = stack.getOrDefault(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT);
+        return component.occupancy().compareTo(Fraction.ZERO) > 0;
     }
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        AmmoPouchContentsComponent bundleContentsComponent = stack.getOrDefault(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT);
-        return Math.min(1 + MathHelper.multiplyFraction(bundleContentsComponent.getOccupancy(), 12), 13);
+        AmmoPouchComponent component = stack.getOrDefault(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT);
+        return Math.min(1 + MathHelper.multiplyFraction(component.occupancy(), 12), 13);
     }
 
     @Override
@@ -133,42 +118,27 @@ public class AmmoPouchItem extends BundleItem {
         return ITEM_BAR_COLOR;
     }
 
-    private static boolean dropAllBundledItems(ItemStack stack, PlayerEntity player) {
-        AmmoPouchContentsComponent bundleContentsComponent = stack.get(ModDataComponents.AMMO_POUCH_CONTENTS);
-        if (bundleContentsComponent != null && !bundleContentsComponent.isEmpty()) {
-            stack.set(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT);
-            if (player instanceof ServerPlayerEntity) {
-                bundleContentsComponent.iterateCopy().forEach(stackx -> player.dropItem(stackx, true));
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public Optional<TooltipData> getTooltipData(ItemStack stack) {
         return !stack.contains(DataComponentTypes.HIDE_TOOLTIP) && !stack.contains(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP)
-                ? Optional.ofNullable(stack.get(ModDataComponents.AMMO_POUCH_CONTENTS)).map(AmmoPouchTooltipData::new)
+                ? Optional.ofNullable(stack.get(ModDataComponents.AMMO_POUCH)).map(AmmoPouchTooltipData::new)
                 : Optional.empty();
     }
 
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-        AmmoPouchContentsComponent bundleContentsComponent = stack.get(ModDataComponents.AMMO_POUCH_CONTENTS);
-        if (bundleContentsComponent != null) {
-            int i = MathHelper.multiplyFraction(bundleContentsComponent.getOccupancy(), 64);
-            tooltip.add(Text.translatable("item.minecraft.bundle.fullness", i, 64).formatted(Formatting.GRAY));
+        if (stack.get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
+            tooltip.add(Text.translatable("item.minecraft.bundle.fullness",
+                    MathHelper.multiplyFraction(component.occupancy(), 256),
+                    256).formatted(Formatting.GRAY));
         }
     }
 
     @Override
     public void onItemEntityDestroyed(ItemEntity entity) {
-        AmmoPouchContentsComponent bundleContentsComponent = entity.getStack().get(ModDataComponents.AMMO_POUCH_CONTENTS);
-        if (bundleContentsComponent != null) {
-            entity.getStack().set(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT);
-            ItemUsage.spawnItemContents(entity, bundleContentsComponent.iterateCopy());
+        if (entity.getStack().get(ModDataComponents.AMMO_POUCH) instanceof AmmoPouchComponent component) {
+            entity.getStack().set(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT);
+            ItemUsage.spawnItemContents(entity, component.iterateCopy());
         }
     }
 
@@ -183,4 +153,13 @@ public class AmmoPouchItem extends BundleItem {
     private void playDropContentsSound(Entity entity) {
         entity.playSound(SoundEvents.ITEM_BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
     }
+
+    public static void registerTooltip() {
+        TooltipComponentCallback.EVENT.register(data -> {
+            if (data instanceof AmmoPouchTooltipData(AmmoPouchComponent contents)) return new AmmoPouchTooltipComponent(contents);
+            else return null;
+        });
+    }
+
+    public record AmmoPouchTooltipData(AmmoPouchComponent contents) implements TooltipData {}
 }

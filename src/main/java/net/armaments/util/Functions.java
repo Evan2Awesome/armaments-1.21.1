@@ -52,4 +52,25 @@ public class Functions {
     public static boolean gunUsable(PlayerEntity player, GunItem gun, ItemStack stack) {
         return player.getAttackCooldownProgress(1f) == 1f && gun.getAmmo(stack) > 0 && !player.getItemCooldownManager().isCoolingDown(stack.getItem());
     }
+
+    public static boolean stacksMatch(List<ItemStack> left, List<ItemStack> right) {
+        if (left.size() != right.size()) return false;
+
+        for (int i = 0; i < left.size(); i++) {
+            if (!ItemStack.areItemsAndComponentsEqual(left.get(i), right.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int listHashCode(List<ItemStack> stacks) {
+        int hash = 1;
+
+        for (ItemStack stack : stacks) {
+            hash = 31 * hash + ItemStack.hashCode(stack);
+        }
+
+        return hash;
+    }
 }

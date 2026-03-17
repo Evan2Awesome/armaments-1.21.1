@@ -2,17 +2,14 @@ package net.armaments.item;
 
 import net.armaments.Armaments;
 import net.armaments.ModGroup;
-import net.armaments.item.component.AmmoPouchContentsComponent;
+import net.armaments.item.component.AmmoPouchComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.item.custom.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -79,7 +76,8 @@ public class ModItems {
             super.appendTooltip(stack, context, tooltip, type);
         }
     });
-    public static final AmmoPouchItem AMMO_POUCH = registerItem("ammo_pouch", new AmmoPouchItem(new Item.Settings().maxCount(1).component(ModDataComponents.AMMO_POUCH_CONTENTS, AmmoPouchContentsComponent.DEFAULT)));
+
+    public static final AmmoPouchItem AMMO_POUCH = registerItem("ammo_pouch", new AmmoPouchItem(new Item.Settings().maxCount(1).component(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT)));
 
     public static final Item SCREEN_SHAKE_TEST = registerItem("screen_shake_test", new ScreenShakeTestItem(new Item.Settings()));
 
@@ -94,5 +92,6 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SEARCH).register(fabricItemGroupEntries -> {
             fabricItemGroupEntries.add(BULLET);
         });
+        AmmoPouchItem.registerTooltip();
     }
 }

@@ -1,7 +1,6 @@
 package net.armaments.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.armaments.item.custom.EchoGunItem;
 import net.armaments.item.custom.GunItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,17 +9,18 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
 
-    private static final double ZOOM_IN_TARGET = 0.5; // 4× zoom
-    private static final double ZOOM_OUT_TARGET = 1.0;
-    private static final double ZOOM_SPEED = 0.005; // lower = slower
+    @Unique private static final double ZOOM_IN_TARGET = 0.5; // 4× zoom
+    @Unique private static final double ZOOM_OUT_TARGET = 1.0;
+    @Unique private static final double ZOOM_SPEED = 0.005; // lower = slower
 
-    private double zoomFactor = 1.0;
+    @Unique private double zoomFactor = 1.0;
 
     @ModifyReturnValue(
             method = "getFov",

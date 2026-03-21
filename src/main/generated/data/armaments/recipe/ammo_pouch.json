@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:bundle"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "lil",
+    "lbl",
+    "lll"
+  ],
+  "result": {
+    "count": 1,
+    "id": "armaments:ammo_pouch"
+  }
+}

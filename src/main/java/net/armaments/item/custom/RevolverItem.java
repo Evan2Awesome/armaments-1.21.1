@@ -90,6 +90,9 @@ public class RevolverItem extends AbstractGunItem {
 
     public void bigShot(PlayerEntity shooter, ItemStack stack) {
         if (this.getAmmo(stack) >= 1) {
+            Vec3d vec3d = shooter.getCameraPosVec(1.0f).add(shooter.getRotationVec(1.0f).multiply(1));
+            shooter.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0f + ((double) shooter.getRandom().nextBetweenExclusive(-10, 11)/500), 0.05f, 0.0f + ((double) shooter.getRandom().nextBetweenExclusive(-10, 11)/500));
+
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, this.getAmmo(stack) - 1);
             shooter.playSound(ModSounds.GUNSHOT);

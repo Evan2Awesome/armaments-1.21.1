@@ -11,9 +11,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class SniperItem extends AbstractGunItem implements GunItem {
@@ -74,6 +76,9 @@ public class SniperItem extends AbstractGunItem implements GunItem {
     @Override
     public void shoot(PlayerEntity shooter, ItemStack gun) {
         if (this.getAmmo(gun) >= 1) {
+            Vec3d vec3d = shooter.getCameraPosVec(1.0f).add(shooter.getRotationVec(1.0f).multiply(1));
+            shooter.getWorld().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, vec3d.x, vec3d.y, vec3d.z, 0.0f + ((double) shooter.getRandom().nextBetweenExclusive(-10, 11)/500), 0.05f, 0.0f + ((double) shooter.getRandom().nextBetweenExclusive(-10, 11)/500));
+
             gun.damage(1, shooter, gun.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             gun.set(ModDataComponents.AMMO, this.getAmmo(gun) - 1);
             shooter.playSound(ModSounds.GUNSHOT);

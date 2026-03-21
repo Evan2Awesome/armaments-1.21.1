@@ -38,6 +38,17 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.STRING), conditionsFromItem(Items.STRING))
                 .criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
                 .offerTo(recipeExporter, Identifier.ofVanilla("bundle"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.AMMO_POUCH)
+                .pattern("lil")
+                .pattern("lbl")
+                .pattern("lll")
+                .input('b', Items.BUNDLE)
+                .input('i', Items.IRON_INGOT)
+                .input('l', Items.LEATHER)
+                .criterion(hasItem(Items.STRING), conditionsFromItem(Items.STRING))
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
+                .offerTo(recipeExporter, Identifier.ofVanilla("ammo_pouch"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BULLET,8)
                 .pattern(" i ")

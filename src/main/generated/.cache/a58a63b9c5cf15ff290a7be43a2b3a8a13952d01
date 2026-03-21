@@ -1,14 +1,16 @@
-// 1.21.1	2026-03-16T15:37:22.2960887	Armaments/Recipes
+// 1.21.1	2026-03-21T01:03:39.0557633	Armaments/Recipes
 4c3db80bbcf9647931bbc95112f4248ad436dfeb data\armaments\recipe\firearm_table.json
 30de962c4272bfde614179f4fc342fe48d7a1b02 data\armaments\advancement\recipes\misc\heavy_bullet.json
 39fd6befd9688c1dc713d0a2858608b5147faa0a data\armaments\recipe\revolver.json
 48ce831b2401455e445f2e56e2227675e7a1b5a6 data\armaments\recipe\bullet.json
+296a6db2ebbb3617a54ae23ce36cc615dfd37856 data\armaments\advancement\recipes\misc\ammo_pouch.json
 67fdbde5c9a66e51a7cc95c7d09c73d82c4e1585 data\armaments\advancement\recipes\misc\bundle.json
 266dc7da3d6f04f0b224dd085de6435ac73a9bc2 data\armaments\recipe\flintlock.json
 18ba15fcbee220e805f68903f6946dfe1f01d499 data\armaments\advancement\recipes\misc\firearm_table.json
 ce05aa8f71d9eaa7d1f0ac6c12da9191d6591359 data\armaments\advancement\recipes\misc\echo_gun.json
 c906b01e9c779cd2825da8500cb152886a0fe0ad data\armaments\recipe\bundle.json
 5c4c383156e95786da775ddcfb9e860e73e35518 data\armaments\advancement\recipes\misc\bullet.json
+a374cb8b986b8a2cdee1632a0f831a0ba2bf3bb9 data\armaments\recipe\ammo_pouch.json
 65b12067cecab1f1d07e7be345be79cc4ba2b7e7 data\armaments\recipe\cogwork_sniper.json
 4a74c4f1971c127f9e7f8b70eb3d738f720f2c82 data\armaments\advancement\recipes\misc\cogwork_sniper.json
 4fdbb9aca1554563e4a36932febbee059691fe3e data\armaments\recipe\light_bullet.json

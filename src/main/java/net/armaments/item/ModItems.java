@@ -63,6 +63,22 @@ public class ModItems {
                     new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
                             Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,4F, EntityAttributeModifier.Operation.ADD_VALUE
                     ), AttributeModifierSlot.MAINHAND)),true))));
+    public static final HeavyRevolverItem HEAVY_REVOLVER = registerItem("heavy_revolver", new HeavyRevolverItem(new Item.Settings().maxDamage(320)
+            .attributeModifiers(new AttributeModifiersComponent(List.of(
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_SPEED_MODIFIER_ID,-2.8F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND),
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,2F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND)),true))));
+    public static final MinigunItem MINIGUN = registerItem("minigun", new MinigunItem(new Item.Settings().maxDamage(2500)
+            .attributeModifiers(new AttributeModifiersComponent(List.of(
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_SPEED_MODIFIER_ID,4F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND),
+                    new AttributeModifiersComponent.Entry(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
+                            Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,2F, EntityAttributeModifier.Operation.ADD_VALUE
+                    ), AttributeModifierSlot.MAINHAND)),true))));
 
 
     public static final Item BULLET = registerItem("bullet", new Item(new Item.Settings().maxCount(32)));

@@ -16,6 +16,7 @@
   },
   "client": [
     "BipedEntityModelMixin",
+    "CameraMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
     "InGameHudMixin",

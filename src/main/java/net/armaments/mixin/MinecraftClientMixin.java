@@ -3,6 +3,7 @@ package net.armaments.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.armaments.ArmamentsClient;
 import net.armaments.item.ModItems;
 import net.armaments.item.custom.GunItem;
 import net.armaments.network.ShootC2SPacket;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MinecraftClient.class)
@@ -24,6 +26,8 @@ public abstract class MinecraftClientMixin {
     @Shadow @Nullable public ClientPlayerEntity player;
 
     @Shadow @Final public GameOptions options;
+
+
 
     @WrapMethod(method = "doAttack")
     private boolean armaments$overrideAttack(Operation<Boolean> original) {

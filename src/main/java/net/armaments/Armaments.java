@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 public class Armaments implements ModInitializer {
 	public static final String MOD_ID = "armaments";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static boolean doom = false;
 
 	@Override
 	public void onInitialize() {
@@ -20,6 +21,8 @@ public class Armaments implements ModInitializer {
 		ModPlayPackets.registerC2S();
 		ModBlocks.registerModBlocks();
 	}
+
+	public static boolean isDoom() {return doom;}
 
 	public static Identifier id(String id) {
 		return Identifier.of(MOD_ID, id);

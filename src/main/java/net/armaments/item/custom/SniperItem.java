@@ -1,5 +1,6 @@
 package net.armaments.item.custom;
 
+import net.armaments.api.entity.event.SpyglassEvent;
 import net.armaments.client.ModSounds;
 import net.armaments.entity.ModDamageSources;
 import net.armaments.item.ModItems;
@@ -91,5 +92,9 @@ public class SniperItem extends AbstractGunItem implements GunItem {
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
         return ingredient.isOf(Items.GOLD_INGOT);
+    }
+
+    public static void registerEvents() {
+        SpyglassEvent.EVENT.register(player -> player.getActiveItem().isOf(ModItems.SNIPER_RIFLE));
     }
 }

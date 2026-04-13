@@ -5,7 +5,6 @@
   "mixins": [
     "DamageSourcesMixin",
     "ItemStackMixin",
-    "PlayerEntityMixin",
     "PlayerInventoryMixin"
   ],
   "injectors": {
@@ -15,13 +14,11 @@
     "requireAnnotations": true
   },
   "client": [
-    "BipedEntityModelMixin",
     "CameraMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
     "InGameHudMixin",
     "ItemRendererMixin",
-    "MinecraftClientMixin",
-    "ModelLoaderMixin"
+    "MinecraftClientMixin"
   ]
 }

@@ -16,9 +16,11 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
+			"net.armaments.api.API",
 			"net.armaments.Armaments"
 		],
 		"client": [
+			"net.armaments.api.APIClient",
 			"net.armaments.ArmamentsClient"
 		],
 		"fabric-datagen": [
@@ -26,6 +28,7 @@
 		]
 	},
 	"mixins": [
+		"armaments_api.mixins.json",
 		"armaments.mixins.json"
 	],
 	"depends": {

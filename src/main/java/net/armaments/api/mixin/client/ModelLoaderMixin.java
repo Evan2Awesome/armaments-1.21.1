@@ -1,6 +1,6 @@
-package net.armaments.mixin;
+package net.armaments.api.mixin.client;
 
-import net.armaments.util.Functions;
+import net.armaments.api.client.event.LoadModelsEvent;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.ModelIdentifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,20 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModelLoader.class)
 public abstract class ModelLoaderMixin {
-    @Shadow
-    protected abstract void loadItemModel(ModelIdentifier id);
+    @Shadow protected abstract void loadItemModel(ModelIdentifier id);
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;loadItemModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 1, shift = At.Shift.AFTER))
-    private void onInit(CallbackInfo ci) {
-        this.loadItemModel(Functions.mId("revolver_2d"));
-        this.loadItemModel(Functions.mId("revolver_fp"));
-
-        this.loadItemModel(Functions.mId("cogwork_sniper_2d"));
-
-        this.loadItemModel(Functions.mId("echo_gun_2d"));
-        this.loadItemModel(Functions.mId("charge_gun_2d"));
-
-        this.loadItemModel(Functions.mId("flintlock_loaded"));
-        this.loadItemModel(Functions.mId("flintlock_2d"));
+    private void armaments_api$loadModels(CallbackInfo ci) {
+        LoadModelsEvent.EVENT.invoker().loadModels(this::loadItemModel);
     }
 }

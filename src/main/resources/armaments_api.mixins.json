@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "net.armaments.api.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "client.BipedEntityModelMixin",
+    "client.ItemRendererMixin",
+    "client.ModelLoaderMixin"
+  ]
+}

@@ -1,8 +1,6 @@
 package net.armaments.util;
 
-import net.armaments.Armaments;
 import net.armaments.item.custom.GunItem;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,10 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Functions {
-    public static ModelIdentifier mId(String path) {
-        return ModelIdentifier.ofInventoryVariant(Armaments.id(path));
-    }
-
     @Nullable
     public static LivingEntity raycastEntity(PlayerEntity player, double distance) {
         Vec3d start = player.getCameraPosVec(1.0f);

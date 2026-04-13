@@ -1,5 +1,6 @@
-package net.armaments.item.component;
+package net.armaments.api.client.item.stack_holder;
 
+import net.armaments.api.item.stack_holder.StackHolder;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -8,10 +9,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.math.Fraction;
 
-public record AmmoPouchTooltipComponent(AmmoPouchComponent component) implements TooltipComponent {
+public class BundleLikeTooltip<T extends StackHolder<T>> implements TooltipComponent {
     public static final Identifier BACKGROUND_TEXTURE = Identifier.ofVanilla("container/bundle/background");
     public static final Identifier BLOCKED_SLOT_TEXTURE = Identifier.ofVanilla("container/bundle/blocked_slot");
     public static final Identifier SLOT_TEXTURE = Identifier.ofVanilla("container/bundle/slot");
+
+    public final T holder;
+
+    public BundleLikeTooltip(T holder) {
+        this.holder = holder;
+    }
 
     @Override
     public int getHeight() {
@@ -36,7 +43,7 @@ public record AmmoPouchTooltipComponent(AmmoPouchComponent component) implements
         int i = this.getColumns();
         int j = this.getRows();
         context.drawGuiTexture(BACKGROUND_TEXTURE, x, y, this.getColumnsWidth(), this.getRowsHeight());
-        boolean bl = this.component.occupancy().compareTo(Fraction.ONE) >= 0;
+        boolean bl = this.holder.weight().isError() || this.holder.weight().getOrThrow().compareTo(Fraction.ONE) >= 0;
         int k = 0;
 
         for (int l = 0; l < j; l++) {
@@ -49,10 +56,10 @@ public record AmmoPouchTooltipComponent(AmmoPouchComponent component) implements
     }
 
     private void drawSlot(int x, int y, int index, boolean shouldBlock, DrawContext context, TextRenderer textRenderer) {
-        if (index >= this.component.size()) {
+        if (index >= this.holder.size()) {
             this.draw(context, x, y, shouldBlock ? BLOCKED_SLOT_TEXTURE : SLOT_TEXTURE);
         } else {
-            ItemStack itemStack = this.component.get(index);
+            ItemStack itemStack = this.holder.get(index);
             this.draw(context, x, y, SLOT_TEXTURE);
             context.drawItem(itemStack, x + 1, y + 1, index);
             context.drawItemInSlot(textRenderer, itemStack, x + 1, y + 1);
@@ -67,10 +74,10 @@ public record AmmoPouchTooltipComponent(AmmoPouchComponent component) implements
     }
 
     private int getColumns() {
-        return Math.max(2, (int)Math.ceil(Math.sqrt(this.component.size() + 1.0)));
+        return Math.max(2, (int)Math.ceil(Math.sqrt(this.holder.size() + 1.0)));
     }
 
     private int getRows() {
-        return (int)Math.ceil((this.component.size() + 1.0) / this.getColumns());
+        return (int)Math.ceil((this.holder.size() + 1.0) / this.getColumns());
     }
 }

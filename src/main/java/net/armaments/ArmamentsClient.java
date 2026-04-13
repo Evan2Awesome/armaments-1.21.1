@@ -1,40 +1,30 @@
 package net.armaments;
 
+import net.armaments.api.client.item.stack_holder.BundleLikeTooltip;
 import net.armaments.client.ModAngles;
 import net.armaments.client.ModModelPredicates;
+import net.armaments.client.ModModels;
+import net.armaments.item.component.AmmoPouchComponent;
+import net.armaments.network.ModPlayPackets;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
-import org.apache.commons.lang3.function.TriConsumer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ArmamentsClient implements ClientModInitializer {
-    public static final Map<Item, TriConsumer<LivingEntity, BipedEntityModel<LivingEntity>, Float>> ANGLES_MAP = new HashMap<>();
-    public static final Map<TagKey<Item>, TriConsumer<LivingEntity, BipedEntityModel<LivingEntity>, Float>> TAG_ANGLES_MAP = new HashMap<>();
-
     @Override
     public void onInitializeClient() {
+        ModPlayPackets.registerC2S();
+        ModModels.load();
         ModModelPredicates.register();
         ModAngles.register();
-    }
 
-    public static void addAngles(Item item, TriConsumer<LivingEntity, BipedEntityModel<LivingEntity>, Float> consumer) {
-        ANGLES_MAP.put(item, consumer);
-    }
-
-    public static void addAngles(TagKey<Item> tag, TriConsumer<LivingEntity, BipedEntityModel<LivingEntity>, Float> consumer) {
-        TAG_ANGLES_MAP.put(tag, consumer);
+        TooltipComponentCallback.EVENT.register(data -> {
+            if (data instanceof AmmoPouchComponent component) return new BundleLikeTooltip<>(component);
+            else return null;
+        });
     }
 
     public static void renderRelativeToCrosshair(DrawContext drawContext, int ammo, int maxAmmo, int x, int y, int color) {

@@ -2,6 +2,7 @@ package net.armaments.item;
 
 import net.armaments.Armaments;
 import net.armaments.ModGroup;
+import net.armaments.api.item.stack_holder.BundleLikeItem;
 import net.armaments.item.component.AmmoPouchComponent;
 import net.armaments.item.component.ModDataComponents;
 import net.armaments.item.custom.*;
@@ -93,7 +94,13 @@ public class ModItems {
         }
     });
 
-    public static final AmmoPouchItem AMMO_POUCH = registerItem("ammo_pouch", new AmmoPouchItem(new Item.Settings().maxCount(1).component(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.DEFAULT)));
+    public static final BundleLikeItem<AmmoPouchComponent> AMMO_POUCH = registerItem(
+            "ammo_pouch",
+            new BundleLikeItem<>(
+                    new Item.Settings().maxCount(1).component(ModDataComponents.AMMO_POUCH, AmmoPouchComponent.EMPTY),
+                    ModDataComponents.AMMO_POUCH, AmmoPouchComponent.EMPTY
+            )
+    );
 
     public static final Item SCREEN_SHAKE_TEST = registerItem("screen_shake_test", new ScreenShakeTestItem(new Item.Settings()));
 
@@ -108,6 +115,6 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SEARCH).register(fabricItemGroupEntries -> {
             fabricItemGroupEntries.add(BULLET);
         });
-        AmmoPouchItem.registerTooltip();
+        SniperItem.registerEvents();
     }
 }

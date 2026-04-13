@@ -1,6 +1,6 @@
-package net.armaments.mixin;
+package net.armaments.api.mixin.client;
 
-import net.armaments.ArmamentsClient;
+import net.armaments.api.client.event.EntityAnglesEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.model.AnimalModel;
@@ -17,15 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BipedEntityModel.class)
 public abstract class BipedEntityModelMixin<T extends LivingEntity> extends AnimalModel<T> implements ModelWithArms, ModelWithHead {
     @Inject(method = "setAngles*", at = @At(value = "TAIL")) @SuppressWarnings("unchecked")
-    private void setAnglesMixin(T entity, float f, float g, float h, float i, float j, CallbackInfo info) {
-        BipedEntityModel<LivingEntity> model = (BipedEntityModel<LivingEntity>)(Object) this;
-        float tickDelta = h - entity.age;
-        ArmamentsClient.ANGLES_MAP.forEach((item, consumer) -> {
-            if (entity.getMainHandStack().isOf(item) || entity.getOffHandStack().isOf(item)) consumer.accept(entity, model, tickDelta);
-        });
-        ArmamentsClient.TAG_ANGLES_MAP.forEach((tag, consumer) -> {
-            if (entity.getMainHandStack().isIn(tag) || entity.getOffHandStack().isIn(tag)) consumer.accept(entity, model, tickDelta);
-        });
+    private void armaments_api$setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, CallbackInfo info) {
+        BipedEntityModel<LivingEntity> model = (BipedEntityModel<LivingEntity>)(Object)this;
+        EntityAnglesEvent.BIPED_ANGLES.invoker().setAngles(entity, model, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
     }
 }
 

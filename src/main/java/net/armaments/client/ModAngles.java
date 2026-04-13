@@ -1,77 +1,66 @@
 package net.armaments.client;
 
-import net.armaments.ArmamentsClient;
+import net.armaments.api.client.event.EntityAnglesEvent;
 import net.armaments.util.ModTags;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.entity.model.CrossbowPosing;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
-import net.minecraft.util.math.MathHelper;
 
 public class ModAngles {
     public static void register() {
-        ArmamentsClient.addAngles(ModTags.Items.TWO_HANDED_GUN, (entity, model, tickDelta) -> {
-            ModelPart rightArm = model.rightArm;
-            ModelPart leftArm = model.leftArm;
-
-            boolean mainHand = entity.getMainHandStack().isIn(ModTags.Items.TWO_HANDED_GUN);
-            boolean offHand  = entity.getOffHandStack().isIn(ModTags.Items.TWO_HANDED_GUN);
-
-            if (mainHand || offHand) {
-                boolean rightArmed = mainHand == entity.getMainArm().equals(Arm.RIGHT);
-                int multiplier = rightArmed ? 1 : -1;
-
-                ModelPart primary = rightArmed ? rightArm : leftArm;
-                ModelPart secondary = rightArmed ? leftArm : rightArm;
-
-                if (entity.isUsingItem() && entity.getActiveItem().isIn(ModTags.Items.TWO_HANDED_GUN) && entity.isSneaky()) {
-                    primary.yaw = -0.8F * multiplier;
-                    primary.pitch = -0.97079635F;
-                    secondary.pitch = primary.pitch;
-
-                    float pullTime = MathHelper.floor(EnchantmentHelper.getCrossbowChargeTime(entity.getMainHandStack(), entity, 2.5f) * 20f);
-                    float useTime = MathHelper.clamp(entity.getItemUseTime() + tickDelta, 0.0F, pullTime);
-                    float progress = useTime / pullTime;
-
-                    secondary.yaw = MathHelper.lerp(progress, 0.4F, 0.85F) * multiplier;
-                    secondary.pitch = MathHelper.lerp(progress, secondary.pitch, (float)(-Math.PI / 2));
-                } else {
-                    CrossbowPosing.hold(rightArm, leftArm, model.head, rightArmed);
-
-                    if (entity.isUsingItem() && entity.getActiveItem().isIn(ModTags.Items.TWO_HANDED_GUN)) {
-                        primary.roll  = 0.4F * multiplier;
-                        primary.pitch += 0.1F;
-                        primary.yaw   += 0.15F * multiplier;
-                    } else {
-                        primary.roll  = 0.0F;
-                        primary.pitch += 0.2F;
-                        primary.yaw   += 0.2F * multiplier;
-                    }
-                }
-            }
-        });
-
-        ArmamentsClient.addAngles(ModTags.Items.ONE_HANDED_GUN, (entity, model, tickDelta) -> {
-            boolean rightArm = entity.getMainArm().equals(Arm.RIGHT);
+        EntityAnglesEvent.BIPED_ANGLES.register((
+                entity, model,
+                limbAngle, limbDistance,
+                animationProgress,
+                headYaw, headPitch
+        ) -> {
+            boolean rightHanded = entity.getMainArm().equals(Arm.RIGHT);
+            ModelPart mainArm = rightHanded ? model.rightArm : model.leftArm;
+            ModelPart offArm = rightHanded ? model.leftArm : model.rightArm;
 
             if (entity.getMainHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
-                if (rightArm) {
-                    model.rightArm.yaw = -0.1F + model.head.yaw;
-                    model.rightArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
-                } else {
-                    model.leftArm.yaw = 0.1F + model.head.yaw;
-                    model.leftArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
-                }
+                mainArm.yaw = (rightHanded ? -0.1f : 0.1f) + model.head.yaw;
+                mainArm.pitch = (float) (-Math.PI / 2f) + model.head.pitch;
             }
-            if (entity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)){
-                if (rightArm) {
-                    model.leftArm.yaw = 0.1F + model.head.yaw;
-                    model.leftArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
-                } else {
-                    model.rightArm.yaw = -0.1F + model.head.yaw;
-                    model.rightArm.pitch = (float) (-Math.PI / 2) + model.head.pitch;
-                }
+            if (entity.getOffHandStack().isIn(ModTags.Items.ONE_HANDED_GUN)) {
+                offArm.yaw = (rightHanded ? 0.1f : -0.1f) + model.head.yaw;
+                offArm.pitch = (float) (-Math.PI / 2f) + model.head.pitch;
             }
         });
+
+        EntityAnglesEvent.BIPED_ANGLES.register((
+                entity, model,
+                limbAngle, limbDistance,
+                animationProgress,
+                headYaw, headPitch
+        ) -> {
+            boolean rightHanded = entity.getMainArm().equals(Arm.RIGHT);
+            ItemStack mainStack = entity.getMainHandStack();
+            ItemStack offStack = entity.getOffHandStack();
+
+            if (mainStack.isIn(ModTags.Items.TWO_HANDED_GUN)) {
+                holdTwoHanded(model.rightArm, model.leftArm, model.head, rightHanded);
+                if (entity.getActiveItem().equals(mainStack)) sniperScope(model.rightArm, model.leftArm, rightHanded);
+            } else if (offStack.isIn(ModTags.Items.TWO_HANDED_GUN)) {
+                holdTwoHanded(model.rightArm, model.leftArm, model.head, !rightHanded);
+                if (entity.getActiveItem().equals(offStack)) sniperScope(model.rightArm, model.leftArm, !rightHanded);
+            }
+        });
+    }
+
+    public static void holdTwoHanded(ModelPart rightArm, ModelPart leftArm, ModelPart head, boolean inRightArm) {
+        ModelPart holding = inRightArm ? rightArm : leftArm;
+        ModelPart supporting = inRightArm ? leftArm : rightArm;
+        holding.yaw = (inRightArm ? -0.125f : 0.125f) + head.yaw;
+        supporting.yaw = (inRightArm ? 0.725F : -0.725F) + head.yaw;
+        holding.pitch = (float) (-Math.PI / 2) + head.pitch + 0.1F;
+        supporting.pitch = -1.5F + head.pitch;
+    }
+
+    public static void sniperScope(ModelPart rightArm, ModelPart leftArm, boolean inRightArm) {
+        ModelPart holding = inRightArm ? rightArm : leftArm;
+        holding.roll += inRightArm ? 0.35f : -0.35f;
+        holding.pitch += 0.075f;
+        holding.yaw -= inRightArm ? 0.1f : -0.1f;
     }
 }

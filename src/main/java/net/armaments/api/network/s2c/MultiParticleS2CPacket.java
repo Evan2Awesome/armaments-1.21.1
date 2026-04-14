@@ -1,6 +1,6 @@
 package net.armaments.api.network.s2c;
 
-import net.armaments.Armaments;
+import net.armaments.api.API;
 import net.armaments.api.network.APIPacketCodecs;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -30,7 +30,7 @@ public record MultiParticleS2CPacket<T extends ParticleEffect>(
 ) implements CustomPayload {
     private static final Random RANDOM = Random.create();
 
-    public static final Id<MultiParticleS2CPacket<?>> ID = new Id<>(Armaments.id("multiparticle"));
+    public static final Id<MultiParticleS2CPacket<?>> ID = new Id<>(API.id("multiparticle"));
     public static final PacketCodec<RegistryByteBuf, MultiParticleS2CPacket<?>> PACKET_CODEC = PacketCodec.tuple(
             ParticleTypes.PACKET_CODEC, MultiParticleS2CPacket::particle,
             PacketCodecs.BOOL, MultiParticleS2CPacket::longDistance,

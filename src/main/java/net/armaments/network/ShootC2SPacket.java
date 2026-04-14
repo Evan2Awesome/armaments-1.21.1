@@ -11,7 +11,7 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Hand;
 
 public record ShootC2SPacket(boolean mainhand) implements CustomPayload {
-    public static final Id<ShootC2SPacket> ID = new Id<>(Armaments.id("packet_shoot"));
+    public static final Id<ShootC2SPacket> ID = new Id<>(Armaments.id("shoot"));
     public static final PacketCodec<ByteBuf, ShootC2SPacket> PACKET_CODEC = PacketCodec.tuple(
             PacketCodecs.BOOL, ShootC2SPacket::mainhand,
             ShootC2SPacket::new

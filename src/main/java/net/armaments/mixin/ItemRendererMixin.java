@@ -35,22 +35,6 @@ public abstract class ItemRendererMixin {
     @Shadow public abstract ItemModels getModels();
     @Shadow @Final private MinecraftClient client;
 
-//    @WrapMethod(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V")
-//    private void armaments$gun(ItemStack stack, ModelTransformationMode mode, boolean left, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model, Operation<Void> original) {
-//
-//        boolean two_dimensional = mode.equals(ModelTransformationMode.GUI) || mode.equals(ModelTransformationMode.GROUND) || mode.equals(ModelTransformationMode.FIXED);
-//
-//        if (two_dimensional) {
-//            if (stack.isOf(ModItems.REVOLVER)) model = this.getModels().getModelManager().getModel(ModModels.REVOLVER_2D);
-//            if (stack.isOf(ModItems.SNIPER_RIFLE)) model = this.getModels().getModelManager().getModel(ModModels.COGWORK_SNIPER_2D);
-//            if (stack.isOf(ModItems.ECHO_GUN)) model = this.getModels().getModelManager().getModel(ModModels.ECHO_GUN_2D);
-//            if (stack.isOf(ModItems.CHARGE_GUN)) model = this.getModels().getModelManager().getModel(ModModels.CHARGE_GUN_2D);
-//            if (stack.isOf(ModItems.FLINTLOCK)) model = this.getModels().getModelManager().getModel(ModModels.FLINTLOCK_2D);
-//        }
-//
-//        original.call(stack, mode, left, matrices, vertexConsumers, light, overlay, model);
-//    }
-
     @WrapOperation(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/ItemRenderer;getModel(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)Lnet/minecraft/client/render/model/BakedModel;"))
     private BakedModel armaments$gun(ItemRenderer renderer, ItemStack stack, World world, LivingEntity entity, int seed, Operation<BakedModel> original, @Local(argsOnly = true) ModelTransformationMode mode, @Local(argsOnly = true) boolean left, @Local(argsOnly = true) MatrixStack matrices) {
         if (stack.isOf(ModItems.REVOLVER) && entity != null && entity.isUsingItem() && stack.equals(entity.getActiveItem())) {
@@ -65,12 +49,6 @@ public abstract class ItemRendererMixin {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(client.getRenderTime()*-200));
             }
         }
-
-//        if (stack.isOf(ModItems.FLINTLOCK) && entity != null && stack.getItem() instanceof GunItem gunItem && gunItem.getAmmo(stack) > 0) {
-//            BakedModel model = this.getModels().getModelManager().getModel(ModModels.FLINTLOCK_LOADED);
-//            ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld)world : null;
-//            return model.getOverrides().apply(model, stack, clientWorld, entity, seed);
-//        }
 
         return original.call(renderer, stack, world, entity, seed);
     }

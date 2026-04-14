@@ -5,7 +5,6 @@ import net.armaments.client.ModAngles;
 import net.armaments.client.ModModelPredicates;
 import net.armaments.client.ModModels;
 import net.armaments.item.component.AmmoPouchComponent;
-import net.armaments.network.ModPlayPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.MinecraftClient;
@@ -16,7 +15,6 @@ import net.minecraft.text.Text;
 public class ArmamentsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ModPlayPackets.registerC2S();
         ModModels.load();
         ModModelPredicates.register();
         ModAngles.register();

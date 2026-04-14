@@ -11,7 +11,7 @@ public final class API implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        APIPlayPackets.registerS2C();
+        APIPlayPackets.register();
         TickingObjects.register();
     }
 

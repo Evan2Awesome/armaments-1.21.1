@@ -16,7 +16,7 @@ public class Armaments implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModPlayPackets.registerS2C();
+		ModPlayPackets.register();
 		ModItems.registerModItems();
 		ModSounds.register();
 		ModBlocks.registerModBlocks();

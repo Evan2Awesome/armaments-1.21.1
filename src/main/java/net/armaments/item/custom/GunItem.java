@@ -18,7 +18,7 @@ public interface GunItem {
     float getKickback(ItemStack stack);
     Item ammoItem(ItemStack stack);
 
-    default void tryShoot(PlayerEntity shooter, ItemStack gun) { if (!shooter.isSpectator()) this.shoot(shooter, gun); }
+    default void tryShoot(PlayerEntity shooter, ItemStack gun) {if (this.canShoot(shooter, gun)) this.shoot(shooter, gun);}
     void shoot(PlayerEntity shooter, ItemStack gun);
 
     default int getAmmo(ItemStack stack) {
@@ -51,11 +51,19 @@ public interface GunItem {
         } else gun.set(ModDataComponents.AMMO, this.getMaxAmmo(gun));
     }
 
+    default boolean canShoot(PlayerEntity player, ItemStack stack) {
+        return !player.isSpectator() && player.getAttackCooldownProgress(1f) == 1f && this.getAmmo(stack) > 0 && !player.getItemCooldownManager().isCoolingDown(stack.getItem());
+    }
+
     default boolean fullyAutomatic(ItemStack gun, LivingEntity entity) {
         return false;
     }
 
     default boolean canADS(ItemStack gun, LivingEntity entity) {
         return false;
+    }
+
+    default boolean canUseAndShoot(ItemStack gun, LivingEntity entity) {
+        return entity.getActiveItem().equals(gun);
     }
 }

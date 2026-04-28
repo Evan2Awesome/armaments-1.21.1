@@ -89,6 +89,7 @@ public class GravityAffectedHitscan implements GravityHitscan {
     @Override public Vec3d getCounterforce(World world) {return this.counterforce;}
     @Override public void setCounterforce(World world, Vec3d counterforce) {this.counterforce = counterforce;}
 
+    @Override public Entity owner() {return this.owner;}
     @Override public int age() {return this.age;}
     @Override public int ageLimit() {return this.handler.ageLimit();}
     @Override public void incrementAge() {this.age++;}

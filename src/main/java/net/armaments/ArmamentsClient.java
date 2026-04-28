@@ -2,6 +2,7 @@ package net.armaments;
 
 import net.armaments.api.client.item.stack_holder.BundleLikeTooltip;
 import net.armaments.client.ModAngles;
+import net.armaments.client.ModAttackHandlers;
 import net.armaments.client.ModModelPredicates;
 import net.armaments.client.ModModels;
 import net.armaments.item.component.AmmoPouchComponent;
@@ -18,6 +19,7 @@ public class ArmamentsClient implements ClientModInitializer {
         ModModels.load();
         ModModelPredicates.register();
         ModAngles.register();
+        ModAttackHandlers.register();
 
         TooltipComponentCallback.EVENT.register(data -> {
             if (data instanceof AmmoPouchComponent component) return new BundleLikeTooltip<>(component);

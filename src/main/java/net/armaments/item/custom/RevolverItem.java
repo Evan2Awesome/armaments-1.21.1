@@ -9,7 +9,6 @@ import net.armaments.client.ModSounds;
 import net.armaments.entity.ModDamageSources;
 import net.armaments.item.ModItems;
 import net.armaments.item.component.ModDataComponents;
-import net.armaments.util.Functions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -53,7 +52,7 @@ public class RevolverItem extends AbstractGunItem {
             entity.damage(ModDamageSources.of(entity).revolver(hitscan.owner()), hitscan.getDataOrDefault(DAMAGE, 6f));
             TimedHitscanHandler.super.onEntityHit(hitscan, world, result);
         }
-    }, 50d * 20, 2d);
+    }, 20d * 20, 2d);
 
     public RevolverItem(Settings settings) {
         super(settings);
@@ -120,9 +119,9 @@ public class RevolverItem extends AbstractGunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, this.getAmmo(stack) - 1);
             shooter.playSound(ModSounds.GUNSHOT);
-//            ProjectileHitscan hitscan = BUILDER.build(shooter, shooter.getCameraPosVec(1f), shooter.getRotationVec(1f));
-//            hitscan.setData(DAMAGE, this.getDamage(stack, shooter));
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter));
+            ProjectileHitscan hitscan = BUILDER.build(shooter, shooter.getCameraPosVec(1f), shooter.getRotationVec(1f));
+            hitscan.setData(DAMAGE, this.getDamage(stack, shooter));
+//            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter));
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(1, 11));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
@@ -136,12 +135,17 @@ public class RevolverItem extends AbstractGunItem {
             stack.damage(1, shooter, stack.equals(shooter.getMainHandStack()) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             stack.set(ModDataComponents.AMMO, this.getAmmo(stack) - 1);
             shooter.playSound(ModSounds.GUNSHOT);
-//            ProjectileHitscan hitscan = BUILDER.build(shooter, shooter.getCameraPosVec(1f), shooter.getRotationVec(1f));
-//            hitscan.setData(DAMAGE, this.getDamage(stack, shooter) * 1.5f);
-            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter) * 1.5F);
+            ProjectileHitscan hitscan = BUILDER.build(shooter, shooter.getCameraPosVec(1f), shooter.getRotationVec(1f));
+            hitscan.setData(DAMAGE, this.getDamage(stack, shooter) * 1.5f);
+//            if (Functions.raycastEntity(shooter, 100d) instanceof LivingEntity entity) entity.damage(ModDamageSources.of(shooter).revolver(shooter), this.getDamage(stack, shooter) * 1.5F);
             shooter.setPitch(shooter.getPitch() - shooter.getRandom().nextBetweenExclusive(5, 16));
             shooter.setYaw(shooter.getYaw() - shooter.getRandom().nextBetweenExclusive(-2, 3));
         }
+    }
+
+    @Override
+    public boolean canUseAndShoot(ItemStack gun, LivingEntity entity) {
+        return false;
     }
 
     @Override

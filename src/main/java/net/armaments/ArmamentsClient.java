@@ -15,9 +15,6 @@ public class ArmamentsClient implements ClientModInitializer {
         ModAttackHandlers.register();
         ModGui.register();
 
-        TooltipComponentCallback.EVENT.register(data -> {
-            if (data instanceof AmmoPouchComponent component) return new BundleLikeTooltip<>(component);
-            else return null;
-        });
+        TooltipComponentCallback.EVENT.register(data -> data instanceof AmmoPouchComponent pouch ? new BundleLikeTooltip<>(pouch) : null);
     }
 }

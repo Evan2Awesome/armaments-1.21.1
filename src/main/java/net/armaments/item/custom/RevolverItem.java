@@ -39,7 +39,7 @@ public class RevolverItem extends AbstractGunItem {
         @Override
         public void tick(ProjectileHitscan hitscan, World world) {
             if (hitscan instanceof GravityAffectedHitscan gravity) {
-                if (hitscan.age() >= 3) {
+                if (hitscan.age() >= 1) {
                     gravity.setForce(world, gravity.getForce(world).multiply(0.98d, 1d, 0.98d));
                     gravity.setCounterforce(world, gravity.getCounterforce(world).add(0d, -0.02d, 0d));
                 }

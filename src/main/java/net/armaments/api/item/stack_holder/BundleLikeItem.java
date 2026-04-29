@@ -146,7 +146,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BRUSH;
+        return UseAction.NONE;
     }
 
     @Override

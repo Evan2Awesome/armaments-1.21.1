@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface GunItem {
     int getReloadTime(ItemStack stack);
     float getKickback(ItemStack stack);
     Item ammoItem(ItemStack stack);
+    float get_ads_zoom(ItemStack stack);
 
     default void tryShoot(PlayerEntity shooter, ItemStack gun) {if (this.canShoot(shooter, gun)) this.shoot(shooter, gun);}
     void shoot(PlayerEntity shooter, ItemStack gun);

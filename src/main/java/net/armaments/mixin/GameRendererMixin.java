@@ -10,6 +10,7 @@ import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,7 +27,15 @@ public abstract class GameRendererMixin {
     @Shadow
     public abstract MinecraftClient getClient();
 
-    @Unique private static final double ZOOM_IN_TARGET = 0.5; // 4× zoom
+    @Shadow
+    public abstract Camera getCamera();
+
+    @Shadow
+    @Final
+    private Camera camera;
+    @Shadow
+    @Final
+    private MinecraftClient client;
     @Unique private static final double ZOOM_OUT_TARGET = 1.0;
     @Unique private static final double ZOOM_SPEED = 0.005; // lower = slower
 
@@ -37,20 +46,19 @@ public abstract class GameRendererMixin {
             at = @At("RETURN")
     )
     private double zoomItem$applySmoothZoom(double originalFov, Camera camera, float tickDelta) {
+        double target;
         Entity entity = camera.getFocusedEntity();
-
-
         boolean zooming = false;
+        if (entity instanceof PlayerEntity player && player.getActiveItem().getItem() instanceof GunItem gunItem){
+            if (player.isUsingItem() && gunItem.canADS(player.getActiveItem(), player)) {
+                zooming = true;
+            }
 
-        if (entity instanceof PlayerEntity player && player.getActiveItem().getItem() instanceof GunItem gunItem) {
-            zooming = player.isUsingItem() && gunItem.canADS(player.getActiveItem(), player);
+            target = zooming ? gunItem.get_ads_zoom(player.getActiveItem()) : ZOOM_OUT_TARGET;
+        }else{
+            target = ZOOM_OUT_TARGET;
         }
-
-        double target = zooming ? ZOOM_IN_TARGET : ZOOM_OUT_TARGET;
-
-        // Frame-rate independent interpolation
         zoomFactor += (target - zoomFactor) * (1.0 - Math.pow(1.0 - ZOOM_SPEED, tickDelta * 20.0));
-
         return originalFov * zoomFactor;
     }
 

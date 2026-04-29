@@ -27,5 +27,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.HEAVY_BULLET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CREATIVE_AMMO_POUCH, Models.GENERATED);
         itemModelGenerator.register(ModItems.AMMO_POUCH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.REVOLVING_CYLINDER, Models.GENERATED);
     }
 }

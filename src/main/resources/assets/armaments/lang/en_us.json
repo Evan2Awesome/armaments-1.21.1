@@ -1,16 +1,21 @@
 {
   "itemgroup.armaments.armaments_items": "Armaments",
 
+  "item.armaments.revolving_cylinder": "Revolving Cylinder",
+
   "item.armaments.bullet": "Medium Bullet",
   "item.armaments.light_bullet": "Light Bullet",
   "item.armaments.heavy_bullet": "Heavy Bullet",
+
   "item.armaments.creative_ammo_pouch": "Creative Ammo Pouch",
   "item.armaments.ammo_pouch": "Ammo Pouch",
+
   "item.armaments.cogwork_sniper": "Cogwork Sniper",
   "item.armaments.echo_gun": "Echo Gun",
   "item.armaments.revolver": "Revolver",
   "item.armaments.charge_gun": "Charge Gun",
   "item.armaments.flintlock": "Flintlock Pistol",
+  "item.armaments.bolt_action_rifle": "Bolt Action Rifle",
 
   "block.armaments.firearm_table": "Firearm Table",
 

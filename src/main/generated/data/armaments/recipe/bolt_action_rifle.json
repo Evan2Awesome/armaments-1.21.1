@@ -2,20 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "g": {
-      "item": "minecraft:gunpowder"
+    "i": {
+      "item": "minecraft:iron_ingot"
     },
     "p": {
       "tag": "minecraft:planks"
     }
   },
   "pattern": [
-    "gg ",
-    "pp ",
-    "pp "
+    "  i",
+    " ip",
+    "pi "
   ],
   "result": {
     "count": 1,
-    "id": "armaments:firearm_table"
+    "id": "armaments:bolt_action_rifle"
   }
 }

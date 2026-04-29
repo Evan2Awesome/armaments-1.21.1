@@ -69,4 +69,9 @@ public abstract class AbstractGunItem extends Item implements GunItem {
         stack.set(ModDataComponents.SELECTED_COMPONENT, selected || slot == PlayerInventory.OFF_HAND_SLOT);
         super.inventoryTick(stack, world, entity, slot, selected);
     }
+
+    @Override
+    public float get_ads_zoom(ItemStack stack) {
+        return 0.5f;
+    }
 }

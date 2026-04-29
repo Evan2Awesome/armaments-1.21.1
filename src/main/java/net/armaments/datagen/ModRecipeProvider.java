@@ -22,9 +22,20 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter recipeExporter) {
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.REVOLVING_CYLINDER)
+                .pattern(" i ")
+                .pattern("ini")
+                .pattern(" i ")
+                .input('i', Items.IRON_INGOT)
+                .input('n', Items.IRON_NUGGET)
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .criterion(hasItem(Items.IRON_NUGGET), conditionsFromItem(Items.IRON_NUGGET))
+                .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "revolving_cylinder"));
+
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.FIREARM_TABLE)
-                .pattern("gg")
-                .pattern("pp")
+                .pattern("gg ")
+                .pattern("pp ")
+                .pattern("pp ")
                 .input('p', ItemTags.PLANKS)
                 .input('g', Items.GUNPOWDER)
                 .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
@@ -86,13 +97,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.REVOLVER)
                 .pattern("  i")
-                .pattern(" i ")
+                .pattern(" r ")
                 .pattern("np ")
                 .input('i', Items.IRON_INGOT)
                 .input('n', Items.IRON_NUGGET)
                 .input('p', ItemTags.PLANKS)
+                .input('r', ModItems.REVOLVING_CYLINDER)
                 .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
                 .criterion(hasItem(Items.IRON_NUGGET), conditionsFromItem(Items.IRON_NUGGET))
+                .criterion(hasItem(ModItems.REVOLVING_CYLINDER), conditionsFromItem(ModItems.REVOLVING_CYLINDER))
                 .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "revolver"));
         ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.SNIPER_RIFLE)
                 .pattern("  i")
@@ -128,5 +141,27 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.IRON_NUGGET), conditionsFromItem(Items.IRON_NUGGET))
                 .criterion(hasItem(Items.FLINT), conditionsFromItem(Items.FLINT))
                 .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "flintlock"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BOLT_ACTION_RIFLE)
+                .pattern("  i")
+                .pattern(" ip")
+                .pattern("pi ")
+                .input('i', Items.IRON_INGOT)
+                .input('p', ItemTags.PLANKS)
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .criterion(hasItem(Items.IRON_NUGGET), conditionsFromItem(Items.IRON_NUGGET))
+                .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "bolt_action_rifle"));
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CHARGE_GUN)
+                .pattern(" pi")
+                .pattern("rc ")
+                .pattern("ii ")
+                .input('i', Items.IRON_INGOT)
+                .input('c', Items.COMPASS)
+                .input('p', Items.COMPARATOR)
+                .input('r', Items.REDSTONE)
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .criterion(hasItem(Items.COMPASS), conditionsFromItem(Items.COMPASS))
+                .criterion(hasItem(Items.COMPARATOR), conditionsFromItem(Items.COMPARATOR))
+                .criterion(hasItem(Items.REDSTONE), conditionsFromItem(Items.REDSTONE))
+                .offerTo(recipeExporter, Identifier.of(Armaments.MOD_ID, "charge_gun"));
     }
 }

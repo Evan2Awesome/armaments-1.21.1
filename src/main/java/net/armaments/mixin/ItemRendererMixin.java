@@ -55,15 +55,18 @@ public abstract class ItemRendererMixin {
 
     @Inject(method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/ItemRenderer;renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V"))
     private void renderItemMixin(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int seed, CallbackInfo ci) {
-        if ((Armaments.isDoom() && entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND)) || (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof GunItem gunItem && gunItem.canADS(stack, entity)))) {
+        //center of screen
+        if ((Armaments.isDoom() && entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND)) || (entity != null && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND) && entity.isUsingItem() && (stack.getItem() instanceof GunItem gunItem && gunItem.canADS(stack, entity))) && entity.getActiveItem().getItem() instanceof GunItem) {
             if (stack.getItem() instanceof EchoGunItem) matrices.translate(leftHanded ? 0.5F : -0.5F,0.1,0);
             else if (stack.getItem() instanceof ChargeGunItem) matrices.translate(leftHanded ? 0.56F : -0.56F,0.1,0);
             else if (stack.getItem() instanceof FlintlockItem) matrices.translate(leftHanded ? 0.56F : -0.56F,0.1,0);
             else matrices.translate(leftHanded ? 0.56F : -0.56F,0.1,0);
+            if (stack.getItem() instanceof BoltActionRifleItem) matrices.translate(0, 0.1, -0.6);
         }else if (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND){
             if (stack.getItem() instanceof FlintlockItem) matrices.translate(leftHanded ? 0.1F : -0.1F,0,0);
         }
 
+        //reloading
         if (entity instanceof PlayerEntity player && player.getItemCooldownManager().isCoolingDown(stack.getItem()) && stack.getItem() instanceof GunItem) {
             matrices.translate(leftHanded ? 0.2F : -0.2F, 0,0);
             if (stack.getItem() instanceof RevolverItem && (renderMode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.FIRST_PERSON_RIGHT_HAND)) {

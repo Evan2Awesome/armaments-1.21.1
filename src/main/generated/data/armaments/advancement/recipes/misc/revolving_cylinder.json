@@ -21,19 +21,9 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_revolving_cylinder": {
-      "conditions": {
-        "items": [
-          {
-            "items": "armaments:revolving_cylinder"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armaments:revolver"
+        "recipe": "armaments:revolving_cylinder"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -42,13 +32,12 @@
     [
       "has_the_recipe",
       "has_iron_ingot",
-      "has_iron_nugget",
-      "has_revolving_cylinder"
+      "has_iron_nugget"
     ]
   ],
   "rewards": {
     "recipes": [
-      "armaments:revolver"
+      "armaments:revolving_cylinder"
     ]
   }
 }

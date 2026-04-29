@@ -13,6 +13,7 @@ public final class ModModels {
     public static final ModelIdentifier ECHO_GUN_2D = LoadModelsEvent.model(Armaments.id("echo_gun_2d"));
     public static final ModelIdentifier CHARGE_GUN_2D = LoadModelsEvent.model(Armaments.id("charge_gun_2d"));
     public static final ModelIdentifier FLINTLOCK_2D = LoadModelsEvent.model(Armaments.id("flintlock_2d"));
+    public static final ModelIdentifier BOLT_ACTION_RIFLE_2D = LoadModelsEvent.model(Armaments.id("bolt_action_rifle_2d"));
 
     public static final ModelIdentifier REVOLVER_FP = LoadModelsEvent.model(Armaments.id("revolver_fp"));
     public static final ModelIdentifier FLINTLOCK_LOADED = LoadModelsEvent.model(Armaments.id("flintlock_loaded"));
@@ -24,6 +25,7 @@ public final class ModModels {
             loader.accept(ECHO_GUN_2D);
             loader.accept(CHARGE_GUN_2D);
             loader.accept(FLINTLOCK_2D);
+            loader.accept(BOLT_ACTION_RIFLE_2D);
 
             loader.accept(REVOLVER_FP);
             loader.accept(FLINTLOCK_LOADED);
@@ -40,6 +42,7 @@ public final class ModModels {
                 if (stack.isOf(ModItems.ECHO_GUN)) return models.getModelManager().getModel(ECHO_GUN_2D);
                 if (stack.isOf(ModItems.CHARGE_GUN)) return models.getModelManager().getModel(CHARGE_GUN_2D);
                 if (stack.isOf(ModItems.FLINTLOCK)) return models.getModelManager().getModel(FLINTLOCK_2D);
+                if (stack.isOf(ModItems.BOLT_ACTION_RIFLE)) return models.getModelManager().getModel(BOLT_ACTION_RIFLE_2D);
             }
 
             if (stack.isOf(ModItems.FLINTLOCK) && stack.getItem() instanceof GunItem gunItem && gunItem.getAmmo(stack) > 0) {

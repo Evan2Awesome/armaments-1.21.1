@@ -6,6 +6,7 @@ import net.armaments.item.custom.GunItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
 public final class ModGui {
     public static final Identifier GUN_CROSSHAIR_TEXTURE = Armaments.id("hud/gun_crosshair");
@@ -27,7 +28,7 @@ public final class ModGui {
             ItemStack stack = client.player.getMainHandStack();
             GunItem gunItem = ((GunItem)stack.getItem());
             Text text = Text.literal(gunItem.getAmmo(stack) + "/" + gunItem.getMaxAmmo(stack));
-            context.drawCenteredTextWithShadow(client.textRenderer, text, x + (int) (width * 0.5f), y + 26, 0xFFFFFF);
+            context.drawCenteredTextWithShadow(client.textRenderer, text, x + MathHelper.ceil(width * 0.5f), y + 26, 0xFFFFFF);
         });
 
         HudRenderEvents.MODIFY_ATTACK_INDICATOR.register((client, defaultPack, crosshairTexture) -> {

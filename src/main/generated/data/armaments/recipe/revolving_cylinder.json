@@ -7,21 +7,15 @@
     },
     "n": {
       "item": "minecraft:iron_nugget"
-    },
-    "p": {
-      "tag": "minecraft:planks"
-    },
-    "r": {
-      "item": "armaments:revolving_cylinder"
     }
   },
   "pattern": [
-    "  i",
-    " r ",
-    "np "
+    " i ",
+    "ini",
+    " i "
   ],
   "result": {
     "count": 1,
-    "id": "armaments:revolver"
+    "id": "armaments:revolving_cylinder"
   }
 }

@@ -1,6 +1,26 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_comparator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:comparator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_compass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:compass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_iron_ingot": {
       "conditions": {
         "items": [
@@ -11,21 +31,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_iron_nugget": {
+    "has_redstone": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_nugget"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_revolving_cylinder": {
-      "conditions": {
-        "items": [
-          {
-            "items": "armaments:revolving_cylinder"
+            "items": "minecraft:redstone"
           }
         ]
       },
@@ -33,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "armaments:revolver"
+        "recipe": "armaments:charge_gun"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -42,13 +52,14 @@
     [
       "has_the_recipe",
       "has_iron_ingot",
-      "has_iron_nugget",
-      "has_revolving_cylinder"
+      "has_compass",
+      "has_comparator",
+      "has_redstone"
     ]
   ],
   "rewards": {
     "recipes": [
-      "armaments:revolver"
+      "armaments:charge_gun"
     ]
   }
 }

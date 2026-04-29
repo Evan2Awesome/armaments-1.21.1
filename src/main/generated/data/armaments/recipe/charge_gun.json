@@ -2,26 +2,26 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "c": {
+      "item": "minecraft:compass"
+    },
     "i": {
       "item": "minecraft:iron_ingot"
     },
-    "n": {
-      "item": "minecraft:iron_nugget"
-    },
     "p": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:comparator"
     },
     "r": {
-      "item": "armaments:revolving_cylinder"
+      "item": "minecraft:redstone"
     }
   },
   "pattern": [
-    "  i",
-    " r ",
-    "np "
+    " pi",
+    "rc ",
+    "ii "
   ],
   "result": {
     "count": 1,
-    "id": "armaments:revolver"
+    "id": "armaments:charge_gun"
   }
 }

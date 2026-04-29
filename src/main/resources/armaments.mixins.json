@@ -17,7 +17,6 @@
     "CameraMixin",
     "GameRendererMixin",
     "HeldItemRendererMixin",
-    "InGameHudMixin",
     "ItemRendererMixin"
   ]
 }

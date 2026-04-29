@@ -10,6 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+@FunctionalInterface
 public interface ChangeModelEvent {
     Event<ChangeModelEvent> EVENT = EventFactory.createArrayBacked(ChangeModelEvent.class, events -> (stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model, models) -> {
         for (ChangeModelEvent event : events) {

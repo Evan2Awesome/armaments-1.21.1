@@ -13,6 +13,7 @@
   },
   "client": [
     "client.BipedEntityModelMixin",
+    "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin"
   ]

@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BipedEntityModel.class)
 public abstract class BipedEntityModelMixin<T extends LivingEntity> extends AnimalModel<T> implements ModelWithArms, ModelWithHead {
     @Inject(method = "setAngles*", at = @At(value = "TAIL")) @SuppressWarnings("unchecked")
-    private void armaments_api$setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch, CallbackInfo info) {
+    private void armaments_api$setAngles(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo info) {
         BipedEntityModel<LivingEntity> model = (BipedEntityModel<LivingEntity>)(Object)this;
-        EntityAnglesEvent.BIPED_ANGLES.invoker().setAngles(entity, model, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+        EntityAnglesEvent.BIPED_ANGLES.invoker().setAngles(livingEntity, model, f, g, h, i, j);
     }
 }
 

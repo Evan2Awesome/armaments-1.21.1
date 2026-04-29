@@ -23,12 +23,11 @@ public final class ModGui {
         });
 
         HudRenderEvents.RENDER_CROSSHAIR_ADDITION.register((client, context, texture, x, y, width, height) -> {
-            if (texture.equals(GUN_CROSSHAIR_TEXTURE) && client.player != null) {
-                ItemStack stack = client.player.getMainHandStack();
-                GunItem gunItem = ((GunItem)stack.getItem());
-                Text text = Text.literal(gunItem.getAmmo(stack) + "/" + gunItem.getMaxAmmo(stack));
-                context.drawCenteredTextWithShadow(client.textRenderer, text, x + (int) (width * 0.5f), y + 26, 0xFFFFFF);
-            }
+            if (!texture.equals(GUN_CROSSHAIR_TEXTURE) || client.player == null) return;
+            ItemStack stack = client.player.getMainHandStack();
+            GunItem gunItem = ((GunItem)stack.getItem());
+            Text text = Text.literal(gunItem.getAmmo(stack) + "/" + gunItem.getMaxAmmo(stack));
+            context.drawCenteredTextWithShadow(client.textRenderer, text, x + (int) (width * 0.5f), y + 26, 0xFFFFFF);
         });
 
         HudRenderEvents.MODIFY_ATTACK_INDICATOR.register((client, defaultPack, crosshairTexture) -> {
